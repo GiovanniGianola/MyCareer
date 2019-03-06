@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">MyCareer</string>
+    <string name="title_activity_home_page">HomePage</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="item_courses">Courses</string>
+    <string name="item_homepage">Homepage</string>
+    <string name="item_log_out">Log Out</string>
+
+    <!-- Strings related to Settings -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Empty Fragment -->
+    <string name="empty_fragment_courses">No courses to show.\nPress the + button to start.</string>
+    <string name="empty_fragment_statistics">No statistics to show.</string>
+
+    <!-- Courses Fragment -->
+    <string name="textview_date">date</string>
+    <string name="textview_Credits">Credits</string>
+    <string name="textview_credit">credit</string>
+    <string name="textview_grade">grade</string>
+    <string name="textview_name">name</string>
+
+    <!-- Custom Dialog: Add/update course -->
+    <string name="add_course">Add new Course!</string>
+    <string name="update_course">Update Course!</string>
+    <string name="course_name">Course Name*</string>
+    <string name="grade">Grade</string>
+    <string name="course_credit">Credit*</string>
+    <string name="course_date">Date</string>
+    <string name="field_mandatory">All fields are mandatory.</string>
+    <string name="entry_exist">The course already exists.</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_update">Update</string>
+
+    <!-- Dialog -->
+    <string name="exit_dialog">Exit?</string>
+    <string name="pos_answer">Yes</string>
+    <string name="neg_answer">No</string>
+</resources>

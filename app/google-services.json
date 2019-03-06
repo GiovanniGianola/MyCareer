@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "823302886737",
+    "firebase_url": "https://courseapp-f7766.firebaseio.com",
+    "project_id": "courseapp-f7766",
+    "storage_bucket": "courseapp-f7766.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823302886737:android:5cf8a9fb7789f260",
+        "android_client_info": {
+          "package_name": "com.example.coursesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823302886737-0ef1876n0e5jiu77pe3v9pmbmjtemrvj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coursesapp",
+            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
+          }
+        },
+        {
+          "client_id": "823302886737-nk6s002rtmm4m52odaudtp2550db7c81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coursesapp",
+            "certificate_hash": "62f97a743fc174889cea528b8d001e7c09456eae"
+          }
+        },
+        {
+          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823302886737:android:6b59c08c67535ce5",
+        "android_client_info": {
+          "package_name": "com.example.mycareer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823302886737-hgspr2f12s0rpj39uv0m3qh4a2nmu8u6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycareer",
+            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
+          }
+        },
+        {
+          "client_id": "823302886737-hi5f4tkg31mj1hb5q57l35ejbjojk6sv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycareer",
+            "certificate_hash": "62f97a743fc174889cea528b8d001e7c09456eae"
+          }
+        },
+        {
+          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823302886737:android:7b5619a8c63674fe",
+        "android_client_info": {
+          "package_name": "com.example.mycourses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823302886737-qhmrvithog63t3c4tqv0f31ur57oatub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycourses",
+            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
+          }
+        },
+        {
+          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

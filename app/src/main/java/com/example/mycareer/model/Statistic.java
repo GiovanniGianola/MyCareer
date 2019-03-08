@@ -1,5 +1,7 @@
 package com.example.mycareer.model;
 
+import com.example.mycareer.utils.Costants;
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -104,13 +106,15 @@ public class Statistic {
         }
         df = new DecimalFormat("###.##");
 
-        return (this.getTotalCfuDone() == 0) ? 0 : Double.parseDouble(df.format(avg/this.getTotalCfuDone()));
+        String avgStr = df.format(avg/this.getTotalCfuDone()).replace(',', '.');
+
+        return (this.getTotalCfuDone() == 0) ? 0 : Double.parseDouble(avgStr);
     }
 
     private double convertToNumber(String num){
         double n = 0;
         switch(num){
-            case "Not done yet":
+            case Costants.Strings.NOT_DONE_YET:
                 n = -1D;
                 break;
             case "30L":

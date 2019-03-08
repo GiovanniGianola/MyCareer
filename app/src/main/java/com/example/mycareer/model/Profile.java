@@ -110,6 +110,13 @@ public class Profile implements Serializable {
         stats.setCourses(courseList);
     }
 
+    public int getCourseIndex(Course c){
+        for(int i = 0; i < courseList.size(); i++)
+            if(c.getName().compareTo(courseList.get(i).getName()) == 0)
+                return i;
+        return  -1;
+    }
+
     public DatabaseReference getFirebaseReference(){
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
         return mFirebaseInstance.getReference("users/" + this.getUserId());

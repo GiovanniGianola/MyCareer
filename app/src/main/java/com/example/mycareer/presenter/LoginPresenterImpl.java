@@ -1,10 +1,11 @@
 package com.example.mycareer.presenter;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.view.LoginView;
@@ -67,8 +68,8 @@ public class LoginPresenterImpl implements LoginPresenter {
     public void initGoogleSetting() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com")
-                //.requestIdToken(this.getString(R.string.default_web_client_id))
+                //.requestIdToken("823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com")
+                .requestIdToken(loginView.getContext().getResources().getString(R.string.google_web_client_id))
                 .requestEmail()
                 .build();
 

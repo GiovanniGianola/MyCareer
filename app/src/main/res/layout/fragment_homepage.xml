@@ -7,12 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homepage_fragemnt_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_group1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_avg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout_avg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -80,11 +80,11 @@
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintTop_toBottomOf="@+id/textView_avgScoreTitle" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_exam_passed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 card_view:cardCornerRadius="4dp">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout_examPassed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -140,12 +140,12 @@
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintTop_toBottomOf="@+id/textView_examPassedTitle" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </android.support.v7.widget.CardView>
-        </android.support.constraint.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view_grade_projection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout_group1"
             card_view:cardCornerRadius="4dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout_gradeProjection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -227,10 +227,10 @@
                     app:layout_constraintStart_toEndOf="@+id/simpleProgressBarMax"
                     app:layout_constraintTop_toBottomOf="@+id/textView_gradeProjectionTitle" />
 
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view_earned_credits"
             android:layout_width="0dp"
             android:layout_height="300dp"
@@ -244,7 +244,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_view_grade_projection"
             card_view:cardCornerRadius="4dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout_earnedCredits"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -263,11 +263,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view_gradeBarChart"
             android:layout_width="0dp"
             android:layout_height="300dp"
@@ -281,7 +281,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_view_earned_credits"
             card_view:cardCornerRadius="4dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout_gradeBarChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -314,11 +314,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_gradeFreq" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view_avgLineChart"
             android:layout_width="0dp"
             android:layout_height="300dp"
@@ -334,7 +334,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_view_gradeBarChart"
             card_view:cardCornerRadius="4dp">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout_avgLineChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -368,9 +368,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView_avgTime" />
 
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

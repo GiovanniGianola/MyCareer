@@ -3,18 +3,21 @@ package com.example.mycareer.view.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+
+import com.example.mycareer.model.Profile;
+import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.UtilsConversions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,19 +25,18 @@ import android.widget.TextView;
 import com.example.mycareer.R;
 import com.example.mycareer.base.BaseFragment;
 import com.example.mycareer.model.Course;
-import com.example.mycareer.model.Profile;
 import com.example.mycareer.presenter.CoursesFragementPresenterImpl;
 import com.example.mycareer.presenter.CoursesFragmentPresenter;
-import com.example.mycareer.utils.RVAdapter;
+import com.example.mycareer.adapter.RVAdapter;
 import com.example.mycareer.utils.Utils;
 import com.example.mycareer.view.CourseFragmentView;
+import com.shawnlin.numberpicker.NumberPicker;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-
-import static android.support.v7.widget.RecyclerView.*;
 
 public class CoursesFragment extends BaseFragment implements CourseFragmentView, View.OnClickListener{
     private static final String TAG = CoursesFragment.class.getSimpleName();
@@ -46,13 +48,15 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
 
     private RVAdapter rvAdapter;
 
+    private TextView dialogTitle;
     private EditText courseName;
     private EditText courseCredit;
-    private CalendarView courseDate;
     private TextView errorField;
     private Calendar calendar;
-    private Spinner courseGrade;
     private Dialog dialog;
+    private DatePicker courseDatePicker;
+    private NumberPicker numberPicker;
+    private int numberPickerValue = 1;
 
     private List<Course> courseList;
 
@@ -101,6 +105,7 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
         if(getActivity() != null) {
             this.courseList = list;
             rvAdapter = new RVAdapter(courseList, getActivity());
+            rvAdapter.attachView(this);
             mRecyclerView.setAdapter(rvAdapter);
             rvAdapter.runLayoutAnimation(mRecyclerView);
         }
@@ -125,9 +130,9 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     @Override
     public void setVisibilityCalendar(boolean visibility) {
         if(!visibility)
-            courseDate.setVisibility(View.GONE);
+            courseDatePicker.setVisibility(View.GONE);
         else
-            courseDate.setVisibility(View.VISIBLE);
+            courseDatePicker.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -136,25 +141,28 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     }
 
     @Override
+    public void setGradeNumberPicker(int val) {
+        numberPickerValue = val;
+    }
+
+    @Override
     public void dismissDialog() {
         dialog.dismiss();
     }
 
     @Override
-    public Course getInsertCourse() {
-        return new Course(
-                courseName.getText().toString().trim(),
-                courseGrade.getSelectedItem().toString(),
-                courseCredit.getText().toString().trim(),
-                calendar.getTime());
-    }
-
-    @Override
-    public void updateListAdapter(int pos, Course c) {
+    public void updateListAdapterOnNewCourse(int pos, Course c) {
         this.courseList.add(c);
         sortList();
         rvAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(pos);
+    }
+
+    @Override
+    public void updateListAdapterOnUpdateCourse(int pos, Course c) {
+        this.courseList.remove(pos);
+        this.courseList.add(pos,c);
+        rvAdapter.notifyDataSetChanged();
     }
 
     private void sortList(){
@@ -181,6 +189,12 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     }
 
     @Override
+    public void onSuccessUpdateCourse(String message) {
+        Log.d(TAG, "Course updated in DB.");
+        Utils.showMessage(getContext(), message);
+    }
+
+    @Override
     public void onDatabaseError(String error) {
         Log.d(TAG, error);
         Utils.showMessage(getContext(), error);
@@ -194,32 +208,91 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
 
     @Override
     public void onClick(View v) {
+        initCustomDialog(this.getResources().getString(R.string.add_course), null);
+    }
+
+    @Override
+    public void initCustomDialog(String title, @Nullable final Course course){
         // custom dialog
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.custom_dialog);
 
         // set the custom dialog components
+        dialogTitle = dialog.findViewById(R.id.dialog_title);
         courseName = dialog.findViewById(R.id.course_name);
         courseCredit = dialog.findViewById(R.id.course_credit);
-        courseDate = dialog.findViewById(R.id.course_date);
+        courseDatePicker = dialog.findViewById(R.id.datePicker_course_date);
         errorField = dialog.findViewById(R.id.error_field);
         calendar = Calendar.getInstance();
-        courseGrade = dialog.findViewById(R.id.spinner_grade);
+        numberPicker = dialog.findViewById(R.id.number_picker);
 
-        coursesFragmentPresenter.setOnItemSelectedListenerSpinner(courseGrade);
+        dialogTitle.setText(title);
+
+        coursesFragmentPresenter.initNumberPicker(numberPicker);
+        coursesFragmentPresenter.setOnDatePickerListener(courseDatePicker);
+
+        coursesFragmentPresenter.checkCourse(course);
 
         Button saveButton = dialog.findViewById(R.id.btn_save);
         Button cancelButton = dialog.findViewById(R.id.btn_cancel);
-        coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton);
+        if(course == null)
+            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Costants.Strings.DIALOG_ADD_NEW_COURSE);
+        else
+            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Costants.Strings.DIALOG_UPDATE_COURSE);
         coursesFragmentPresenter.setOnClickListenrCancelButton(cancelButton);
-        coursesFragmentPresenter.setOnDateChangeListenerCalendarView(courseDate);
 
         dialog.show();
+    }
+
+    @Override
+    public void fillCustomDialog(Course course) {
+        System.out.println("SCORE: " + (UtilsConversions.convertScoreToInt(course.getScore())-16));
+        courseName.setText(course.getName());
+        courseName.setEnabled(false);
+        numberPicker.setValue(UtilsConversions.convertScoreToInt(course.getScore())-16);
+        courseCredit.setText(course.getCredit());
+    }
+
+    @Override
+    public void initAlerDialogOnDeleteCourse(Course course) {
+        coursesFragmentPresenter.deleteCourse(course);
+    }
+
+    @Override
+    public void onSuccessDeleteCourse(String message) {
+        Log.d(TAG, "Course deleted in DB.");
+        Utils.showMessage(getContext(), message);
+    }
+
+    @Override
+    public void updateListAdapterOnDeleteCourse(Course course) {
+        this.courseList.remove(course);
+        rvAdapter.notifyDataSetChanged();
     }
 
     @Nullable
     @Override
     public Context getContext() {
         return getView().getContext();
+    }
+
+    @Override
+    public String getInsertCourseName(){
+        return courseName.getText().toString().trim();
+    }
+
+    @Override
+    public String getInsertCourseGrade(){
+        return UtilsConversions.convertScoreToString(numberPickerValue + 16);
+    }
+
+    @Override
+    public String getInsertCourseCredit(){
+        return courseCredit.getText().toString().trim();
+    }
+
+    @Override
+    public Date getInsertCourseDate(){
+        return calendar.getTime();
     }
 }

@@ -1,25 +1,23 @@
 package com.example.mycareer.presenter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.model.Statistic;
+import com.example.mycareer.utils.Costants;
 import com.example.mycareer.view.HomePageFragmentView;
 import com.example.mycareer.view.fragment.HomePageFragment;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter {
@@ -77,6 +75,9 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
         if(courseList != null) {
             for (int i = 0; i < courseList.size(); i++) {
                 int cNumber = convertToNumberInt(courseList.get(i).getScore());
+
+                System.out.println(cNumber + " - " + courseList.get(i).getScore());
+
                 if (cNumber != -1)
                     gradeList[cNumber - 18] += 1;
             }
@@ -87,7 +88,7 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
     private int convertToNumberInt(String num){
         int n = 0;
         switch(num){
-            case "Not done yet":
+            case Costants.Strings.NOT_DONE_YET:
                 n = -1;
                 break;
             case "30L":
@@ -149,13 +150,15 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
         }
         df = new DecimalFormat("###.##");
 
-        return (sum_credit == 0) ? 0 : Float.parseFloat(df.format(avg/sum_credit));
+        String avgStr = df.format(avg/sum_credit).replace(',', '.');
+
+        return (sum_credit == 0) ? 0 : Float.parseFloat(avgStr);
     }
 
     private float convertToNumberFloat(String num){
         float n = 0;
         switch(num){
-            case "Not done yet":
+            case Costants.Strings.NOT_DONE_YET:
                 n = -1f;
                 break;
             case "30L":

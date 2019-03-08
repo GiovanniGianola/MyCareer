@@ -3,7 +3,7 @@ package com.example.mycareer.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +15,12 @@ import com.example.mycareer.R;
 import com.example.mycareer.base.BaseFragment;
 import com.example.mycareer.presenter.HomePageFragmentPresenter;
 import com.example.mycareer.presenter.HomePageFragmentPresenterImpl;
-import com.example.mycareer.utils.Utils;
+import com.example.mycareer.utils.MyMarkerView;
 import com.example.mycareer.view.HomePageFragmentView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.IMarker;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -43,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class HomePageFragment extends BaseFragment implements HomePageFragmentView {
     private static final String TAG = HomePageFragment.class.getSimpleName();
@@ -214,6 +211,28 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
         barData.setValueTextSize(0f);
         barData.setBarWidth(0.9f); // set custom bar width
 
+        YAxis leftAxis = barchart_grade.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGranularityEnabled(true);
+        leftAxis.setGranularity(1f);
+
+        YAxis rightAxis = barchart_grade.getAxisRight();
+        rightAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        rightAxis.setDrawGridLines(true);
+        rightAxis.setGranularityEnabled(true);
+        rightAxis.setGranularity(1f);
+
+        XAxis xAxis = barchart_grade.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.TOP);
+        xAxis.setGranularity(1f);
+
+        MyMarkerView mv = new MyMarkerView(getContext());
+
+        // Set the marker to the chart
+        mv.setChartView(barchart_grade);
+        barchart_grade.setMarker(mv);
+
         barchart_grade.setFitBars(true); // make the x-axis fit exactly all bars
         barchart_grade.setDescription(null);
         barchart_grade.getLegend().setEnabled(false);
@@ -256,10 +275,8 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
         data.setValueTextSize(9f);
 
         XAxis xAxis = linechart_avg.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.TOP_INSIDE);
+        xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setTextSize(10f);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setDrawGridLines(true);
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularity(1f * 24f); // one hour
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -274,14 +291,19 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
         YAxis leftAxis = linechart_avg.getAxisLeft();
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setDrawGridLines(true);
-        leftAxis.setGranularityEnabled(true);
         leftAxis.setYOffset(-9f);
 
         YAxis rightAxis = linechart_avg.getAxisRight();
         rightAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         rightAxis.setDrawGridLines(true);
-        rightAxis.setGranularityEnabled(true);
         rightAxis.setYOffset(-9f);
+
+        // create marker to display box when values are selected
+        MyMarkerView mv = new MyMarkerView(getContext());
+
+        // Set the marker to the chart
+        mv.setChartView(linechart_avg);
+        linechart_avg.setMarker(mv);
 
         // set data
         linechart_avg.getLegend().setEnabled(false);

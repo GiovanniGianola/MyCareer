@@ -3,11 +3,9 @@ package com.example.mycareer.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.mycareer.R;
 
 public class Utils<Data> {
 

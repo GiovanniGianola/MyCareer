@@ -136,28 +136,31 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
     @Override
     public void setMinDegree(Integer number) {
         simpleProgressBarMin.setProgress(number);
-        textView_gradeProjectionMin.setText(number + "/110");
+        textView_gradeProjectionMin.setText(String.format(Locale.getDefault(),"%d/110", number));
     }
 
     @Override
     public void setMaxDegree(Integer number) {
         simpleProgressBarMax.setProgress(number);
-        textView_gradeProjectionMax.setText(number + "/110");
+        textView_gradeProjectionMax.setText(String.format(Locale.getDefault(), "%d/110", number));
     }
 
     @Override
     public void setCfuDone(Float totalCfu, Float totalCfuDone) {
         float[] yData = {totalCfuDone, totalCfu-totalCfuDone};
         String[] xData = {"", ""};
+        String centerText = String.format(Locale.getDefault(),"%.2f%%\n%d/%d\n%s",
+                (totalCfuDone/totalCfu*100),
+                Math.round(totalCfuDone),
+                Math.round(totalCfu),
+                "Earned Credits");
 
-        piechart_credits.setHoleRadius(75f);
+        piechart_credits.setHoleRadius(80f);
         piechart_credits.setTransparentCircleAlpha(0);
-        piechart_credits.setCenterText((totalCfuDone/totalCfu*100) + "%"
-                + "\n" + Math.round(totalCfuDone) + "/" + Math.round(totalCfu)
-                + "\nEarned Credits");
+        piechart_credits.setCenterText(centerText);
         piechart_credits.setCenterTextSize(14);
         piechart_credits.setDescription(null);
-        piechart_credits.setCenterTextRadiusPercent((totalCfuDone/totalCfu*100f));
+        //piechart_credits.setCenterTextRadiusPercent((totalCfuDone/totalCfu*100f));
 
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
@@ -227,11 +230,13 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
         xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setGranularity(1f);
 
-        MyMarkerView mv = new MyMarkerView(getContext());
+        if(getView() != null) {
+            MyMarkerView mv = new MyMarkerView(getContext());
 
-        // Set the marker to the chart
-        mv.setChartView(barchart_grade);
-        barchart_grade.setMarker(mv);
+            // Set the marker to the chart
+            mv.setChartView(barchart_grade);
+            barchart_grade.setMarker(mv);
+        }
 
         barchart_grade.setFitBars(true); // make the x-axis fit exactly all bars
         barchart_grade.setDescription(null);
@@ -298,12 +303,14 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentVi
         rightAxis.setDrawGridLines(true);
         rightAxis.setYOffset(-9f);
 
-        // create marker to display box when values are selected
-        MyMarkerView mv = new MyMarkerView(getContext());
+        if(getView() != null) {
+            // create marker to display box when values are selected
+            MyMarkerView mv = new MyMarkerView(getContext());
 
-        // Set the marker to the chart
-        mv.setChartView(linechart_avg);
-        linechart_avg.setMarker(mv);
+            // Set the marker to the chart
+            mv.setChartView(linechart_avg);
+            linechart_avg.setMarker(mv);
+        }
 
         // set data
         linechart_avg.getLegend().setEnabled(false);

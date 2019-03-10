@@ -55,7 +55,8 @@ public class CoursesFragementPresenterImpl implements CoursesFragmentPresenter {
 
     @Override
     public void checkTextViewNoCourses() {
-        courseFragmentView.checkTextViewNoCourses((Profile.getInstance().getCourseList().size() > 0));
+        if(Profile.getInstance().getCourseList() != null)
+            courseFragmentView.checkTextViewNoCourses((Profile.getInstance().getCourseList().size() > 0));
     }
 
     @Override
@@ -149,7 +150,7 @@ public class CoursesFragementPresenterImpl implements CoursesFragmentPresenter {
         // Set scroller enabled
         numberPicker.setScrollerEnabled(true);
         // Set wrap selector wheel
-        numberPicker.setWrapSelectorWheel(true);
+        numberPicker.setWrapSelectorWheel(false);
         // OnValueChangeListener
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override

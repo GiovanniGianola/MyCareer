@@ -32,5 +32,13 @@ public class Course {
     public String getScore() {
         return score;
     }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
 }
 

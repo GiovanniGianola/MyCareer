@@ -11,6 +11,7 @@
 
     <string name="item_courses">Courses</string>
     <string name="item_homepage">Homepage</string>
+    <string name="item_predictions">Predictions</string>
     <string name="item_log_out">Log Out</string>
 
     <!-- Strings related to Settings -->
@@ -26,6 +27,7 @@
     <string name="textview_credit">credit</string>
     <string name="textview_grade">grade</string>
     <string name="textview_name">name</string>
+    <string name="textview_laude">Laude</string>
 
     <!-- Custom Dialog: Add/update course -->
     <string name="add_course">Add new Course!</string>

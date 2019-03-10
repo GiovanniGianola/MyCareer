@@ -70,6 +70,10 @@ public class Statistic {
         return this.totalCfu;
     }
 
+    public int getCfuToBeDone() {
+        return this.totalCfu - totalCfuDone;
+    }
+
     public int getTotalCoursesDone() {
         return this.totalExams;
     }

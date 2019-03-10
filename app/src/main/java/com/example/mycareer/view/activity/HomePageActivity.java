@@ -3,6 +3,8 @@ package com.example.mycareer.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.example.mycareer.view.fragment.PredictionFragment;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -98,13 +100,18 @@ public class HomePageActivity extends BaseActivity implements HomePageView, Navi
                 Utils.showMessage(this,"Courses!");
                 fragment = new CoursesFragment();
                 break;
+            case R.id.nav_predictions:
+                Utils.showMessage(this,"Predictions!");
+                fragment = new PredictionFragment();
+                break;
             case R.id.nav_log_out:
                 homePagePresenter.logOut();
                 break;
         }
 
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         //replacing the fragment
-        if (fragment != null) {
+        if (fragment != null && (currentFragment == null || !currentFragment.getClass().equals(fragment.getClass()))) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment, fragment.getClass().getName());
             ft.addToBackStack(null);

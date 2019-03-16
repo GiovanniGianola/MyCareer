@@ -6,7 +6,7 @@ import android.util.Log;
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.model.Statistic;
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
 import com.example.mycareer.view.HomePageFragmentView;
 import com.example.mycareer.view.fragment.HomePageFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +64,7 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
     @Override
     public void initCfuDone() {
         if(stat.getTotalCfu() != 0)
-            homePageFragmentView.setCfuDone((float)stat.getTotalCfu(), (float)stat.getTotalCfuDone());
+            homePageFragmentView.setCfuDone((float)stat.maxCfu(), (float)stat.getTotalCfuDone());
     }
 
     @Override
@@ -88,7 +88,7 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
     private int convertToNumberInt(String num){
         int n = 0;
         switch(num){
-            case Costants.Strings.NOT_DONE_YET:
+            case Constants.Strings.NOT_DONE_YET:
                 n = -1;
                 break;
             case "30L":
@@ -158,7 +158,7 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
     private float convertToNumberFloat(String num){
         float n = 0;
         switch(num){
-            case Costants.Strings.NOT_DONE_YET:
+            case Constants.Strings.NOT_DONE_YET:
                 n = -1f;
                 break;
             case "30L":

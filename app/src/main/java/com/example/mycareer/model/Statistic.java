@@ -1,6 +1,8 @@
 package com.example.mycareer.model;
 
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
+import com.example.mycareer.utils.MyApplication;
+import com.example.mycareer.utils.SharedPrefManager;
 import com.example.mycareer.utils.UtilsConversions;
 
 import java.text.DecimalFormat;
@@ -69,6 +71,10 @@ public class Statistic {
 
     public int getTotalCfu() {
         return this.totalCfu;
+    }
+
+    public int maxCfu() {
+        return SharedPrefManager.getIntPrefVal(MyApplication.getAppContext(), Constants.Strings.SPREF_TOT_CREDITS_KEY, totalCfu);
     }
 
     public int getCfuToBeDone() {

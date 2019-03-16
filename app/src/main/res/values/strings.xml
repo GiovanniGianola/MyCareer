@@ -3,6 +3,8 @@
     <string name="title_activity_home_page">HomePage</string>
     <string name="title_activity_app_info">App Info</string>
 
+    <string name="nan">NaN</string>
+
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,6 +15,7 @@
     <string name="item_courses">Courses</string>
     <string name="item_homepage">Homepage</string>
     <string name="item_predictions">Predictions</string>
+    <string name="item_settings">Settings</string>
     <string name="item_info">App info</string>
     <string name="item_log_out">Log Out</string>
 
@@ -38,7 +41,8 @@
     <string name="grade">Grade</string>
     <string name="course_credit">Credit*</string>
     <string name="course_date">Date</string>
-    <string name="field_mandatory">All fields are mandatory.</string>
+    <string name="error_field_mandatory">All fields are mandatory.</string>
+    <string name="error_number_credits">You have exceeded the credit limit. Change the limit in the settings.</string>
     <string name="entry_exist">The course already exists.</string>
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
@@ -48,6 +52,13 @@
     <string name="exit_dialog">Exit?</string>
     <string name="pos_answer">Yes</string>
     <string name="neg_answer">No</string>
+    <string name="ok_answer">Ok</string>
+    <string name="cancel_answer">Cancel</string>
+    <string name="dialog_generic_title">title</string>
+
+    <!-- TextView_Dialog -->
+    <string name="dialog_title_tot_credits">Insert the total number of credits expected by your study plan.</string>
+    <string name="dialog_title_laude_val">Insert the value assigned to a laude in your university (from 30 to 39).</string>
 
     <!-- app_info Activity -->
     <string name="app_info_title_about">About</string>
@@ -59,5 +70,9 @@
     <string name="app_info_send_email">Send Email</string>
     <string name="app_info_version">Version 1.0.0</string>
     <string name="choose_email_client">Choose email client</string>
+
+    <!-- app_info Activity -->
+    <string name="settings_tot_credits">Total credits</string>
+    <string name="settings_laude_value">Laude value</string>
 
 </resources>

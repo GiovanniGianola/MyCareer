@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.mycareer.R;
 import com.example.mycareer.base.BaseActivity;
@@ -23,6 +25,7 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
     private CardView cardViewAbout;
     private CardView cardViewEraseData;
     private CardView cardViewSendEmail;
+    private TextView textViewVersion;
 
     private AlertDialog.Builder builder;
 
@@ -30,6 +33,9 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_info);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         appInfoPresenter = new AppInfoPresenterImpl(this);
         appInfoPresenter.attachView(this);
@@ -42,6 +48,12 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
         cardViewAbout = findViewById(R.id.cardViewAbout);
         cardViewEraseData = findViewById(R.id.cardViewEraseData);
         cardViewSendEmail = findViewById(R.id.cardViewSendEmail);
+        textViewVersion = findViewById(R.id.textView_version);
+        try {
+            textViewVersion.setText("V. " + this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
         builder.setTitle(R.string.app_info_erase_data).setMessage(R.string.app_info_erase_data_message);
@@ -111,5 +123,13 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
         intent.putExtra(Intent.EXTRA_SUBJECT, "Query from android app");
         intent.putExtra(Intent.EXTRA_TEXT, body);
         this.startActivity(Intent.createChooser(intent, this.getString(R.string.choose_email_client)));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

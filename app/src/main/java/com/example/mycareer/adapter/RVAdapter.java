@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.example.mycareer.view.CourseFragmentView;
 import com.example.mycareer.view.fragment.CoursesFragment;
@@ -97,8 +97,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
         String dataStr = sdf.format(c.getDate());
 
         courseViewHolder.courseName.setText(c.getName());
-        courseViewHolder.courseDate.setText(((Costants.Strings.NOT_DONE_YET).compareTo(c.getScore())==0) ? "" : dataStr);
-        courseViewHolder.dateLayout.setVisibility(((Costants.Strings.NOT_DONE_YET).compareTo(c.getScore())==0) ? View.GONE : View.VISIBLE);
+        courseViewHolder.courseDate.setText(((Constants.Strings.NOT_DONE_YET).compareTo(c.getScore())==0) ? "" : dataStr);
+        courseViewHolder.dateLayout.setVisibility(((Constants.Strings.NOT_DONE_YET).compareTo(c.getScore())==0) ? View.GONE : View.VISIBLE);
         courseViewHolder.courseCredit.setText(c.getCredit());
         courseViewHolder.courseGrade.setText(c.getScore().substring(0,2));
         courseViewHolder.edit.setOnClickListener(this);

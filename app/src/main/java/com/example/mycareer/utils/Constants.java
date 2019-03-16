@@ -1,6 +1,6 @@
 package com.example.mycareer.utils;
 
-public class Costants {
+public class Constants {
 
     public static class Strings {
         public static final String NOT_DONE_YET = "ND";
@@ -8,5 +8,9 @@ public class Costants {
 
         public static final String DIALOG_UPDATE_COURSE = "updateCourse";
         public static final String DIALOG_ADD_NEW_COURSE = "addNewCourse";
+
+        /* SharedPreferences KEYS */
+        public static final String SPREF_TOT_CREDITS_KEY = "totCreditsKey";
+        public static final String SPREF_LAUDE_VALUE_KEY = "laudeValueKey";
     }
 }

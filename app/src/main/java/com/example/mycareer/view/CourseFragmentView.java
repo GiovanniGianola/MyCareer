@@ -27,6 +27,7 @@ public interface CourseFragmentView extends BaseFragmentView {
     void onDatabaseError(String error);
 
     void onInvalidCourse();
+    void onInvalidCreditsNumber();
 
     String getInsertCourseName();
     String getInsertCourseGrade();

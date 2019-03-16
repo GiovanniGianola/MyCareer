@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.example.mycareer.view.CourseFragmentView;
 import com.example.mycareer.view.fragment.CoursesFragment;
@@ -84,25 +84,30 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
                 );
 
                 if(evaluateCourse(c.getName(),c.getCredit())) {
-                    Profile.getInstance().getFirebaseReference().child("courses").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            switch (purpose){
-                                case Costants.Strings.DIALOG_ADD_NEW_COURSE:
-                                    addNewCourse(dataSnapshot, c);
-                                    break;
-                                case Costants.Strings.DIALOG_UPDATE_COURSE:
-                                    updateCourse(dataSnapshot, c);
-                                    break;
+                    if(checkCreditsNumbers(c.getCredit())) {
+                        Profile.getInstance().getFirebaseReference().child("courses").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                switch (purpose) {
+                                    case Constants.Strings.DIALOG_ADD_NEW_COURSE:
+                                        addNewCourse(dataSnapshot, c);
+                                        break;
+                                    case Constants.Strings.DIALOG_UPDATE_COURSE:
+                                        updateCourse(dataSnapshot, c);
+                                        break;
+                                }
+                                courseFragmentView.dismissDialog();
                             }
-                            courseFragmentView.dismissDialog();
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.d(TAG, "DatabaseError.");
-                            courseFragmentView.onDatabaseError("Database Error: " + databaseError.getMessage());
-                        }
-                    });
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.d(TAG, "DatabaseError.");
+                                courseFragmentView.onDatabaseError("Database Error: " + databaseError.getMessage());
+                            }
+                        });
+                    }else{
+                        courseFragmentView.onInvalidCreditsNumber();
+                    }
                 }else{
                     courseFragmentView.onInvalidCourse();
                 }
@@ -229,6 +234,12 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
 
     private boolean evaluateCourse(String name, String credit){
         if(TextUtils.isEmpty(name.trim()) || TextUtils.isEmpty(credit.trim()))
+            return false;
+        return true;
+    }
+
+    private boolean checkCreditsNumbers(String credit){
+        if(Integer.parseInt(credit) + Profile.getInstance().getStatistics().getTotalCfu() > Profile.getInstance().getStatistics().maxCfu())
             return false;
         return true;
     }

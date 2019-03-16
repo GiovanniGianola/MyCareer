@@ -3,12 +3,11 @@ package com.example.mycareer.presenter;
 import android.util.Log;
 import android.widget.NumberPicker;
 
-import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.PredictionEntry;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.model.Statistic;
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
 import com.example.mycareer.view.PredictionFragmentView;
 import com.example.mycareer.view.fragment.PredictionFragment;
 
@@ -78,8 +77,8 @@ public class PredictionFragmentPresenterImpl implements PredictionFragmentPresen
 
         predictionEntryList = new ArrayList<>();
 
-        for(int i = 0; i < Costants.Strings.GRADES.length; i++){
-            String grade = Costants.Strings.GRADES[i];
+        for(int i = 0; i < Constants.Strings.GRADES.length; i++){
+            String grade = Constants.Strings.GRADES[i];
 
             newCourse.setScore(grade);
             newList.add(newCourse);

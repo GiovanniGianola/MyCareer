@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -201,7 +201,13 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     @Override
     public void onInvalidCourse() {
         errorField.setVisibility(View.VISIBLE);
-        errorField.setText(R.string.field_mandatory);
+        errorField.setText(R.string.error_field_mandatory);
+    }
+
+    @Override
+    public void onInvalidCreditsNumber() {
+        errorField.setVisibility(View.VISIBLE);
+        errorField.setText(R.string.error_number_credits);
     }
 
     @Override
@@ -234,9 +240,9 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
         Button saveButton = dialog.findViewById(R.id.btn_save);
         Button cancelButton = dialog.findViewById(R.id.btn_cancel);
         if(course == null)
-            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Costants.Strings.DIALOG_ADD_NEW_COURSE);
+            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Constants.Strings.DIALOG_ADD_NEW_COURSE);
         else
-            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Costants.Strings.DIALOG_UPDATE_COURSE);
+            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Constants.Strings.DIALOG_UPDATE_COURSE);
         coursesFragmentPresenter.setOnClickListenrCancelButton(cancelButton);
 
         dialog.show();

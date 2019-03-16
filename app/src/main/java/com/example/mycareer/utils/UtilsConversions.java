@@ -1,5 +1,7 @@
 package com.example.mycareer.utils;
 
+import android.app.Application;
+
 import java.util.Locale;
 
 public class UtilsConversions<Data>  {
@@ -22,7 +24,7 @@ public class UtilsConversions<Data>  {
     public static int convertScoreToInt(String num){
         int n = 0;
         switch(num){
-            case Costants.Strings.NOT_DONE_YET:
+            case Constants.Strings.NOT_DONE_YET:
                 n = 17;
                 break;
             case "30L":
@@ -36,12 +38,13 @@ public class UtilsConversions<Data>  {
 
     public static double convertScoreToDouble(String num){
         double n = 0;
+        double laude = SharedPrefManager.getIntPrefVal(MyApplication.getAppContext(), Constants.Strings.SPREF_LAUDE_VALUE_KEY, 30);
         switch(num){
-            case Costants.Strings.NOT_DONE_YET:
+            case Constants.Strings.NOT_DONE_YET:
                 n = -1D;
                 break;
             case "30L":
-                n = 30D;
+                n = laude;
                 break;
             default:
                 n = Double.parseDouble(num);

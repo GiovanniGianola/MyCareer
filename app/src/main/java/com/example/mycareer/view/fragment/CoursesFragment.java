@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.example.mycareer.model.Profile;
 import com.example.mycareer.utils.Costants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,13 +18,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.mycareer.R;
 import com.example.mycareer.base.BaseFragment;
 import com.example.mycareer.model.Course;
-import com.example.mycareer.presenter.CoursesFragementPresenterImpl;
+import com.example.mycareer.presenter.CoursesFragmentPresenterImpl;
 import com.example.mycareer.presenter.CoursesFragmentPresenter;
 import com.example.mycareer.adapter.RVAdapter;
 import com.example.mycareer.utils.Utils;
@@ -73,7 +71,7 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
 
         initUI();
 
-        coursesFragmentPresenter = new CoursesFragementPresenterImpl();
+        coursesFragmentPresenter = new CoursesFragmentPresenterImpl();
         coursesFragmentPresenter.attachView(this);
         coursesFragmentPresenter.checkTextViewNoCourses();
         coursesFragmentPresenter.initData();

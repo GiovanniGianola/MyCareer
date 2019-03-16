@@ -24,6 +24,11 @@
             android:label="@string/title_activity_home_page"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.AppInfoActivity"
+            android:label="@string/title_activity_app_info"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

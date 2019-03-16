@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyCareer</string>
     <string name="title_activity_home_page">HomePage</string>
+    <string name="title_activity_app_info">App Info</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -12,6 +13,7 @@
     <string name="item_courses">Courses</string>
     <string name="item_homepage">Homepage</string>
     <string name="item_predictions">Predictions</string>
+    <string name="item_info">App info</string>
     <string name="item_log_out">Log Out</string>
 
     <!-- Strings related to Settings -->
@@ -46,4 +48,16 @@
     <string name="exit_dialog">Exit?</string>
     <string name="pos_answer">Yes</string>
     <string name="neg_answer">No</string>
+
+    <!-- app_info Activity -->
+    <string name="app_info_title_about">About</string>
+    <string name="app_info_about">It\'s me :D ... G.G.</string>
+    <string name="app_info_title_general">General</string>
+    <string name="app_info_erase_data">Give My Data Back</string>
+    <string name="app_info_erase_data_message">"Are you sure you want to delete all the data? :( \n(the process is not reversible)"</string>
+    <string name="app_info_title_feedback">Feedback</string>
+    <string name="app_info_send_email">Send Email</string>
+    <string name="app_info_version">Version 1.0.0</string>
+    <string name="choose_email_client">Choose email client</string>
+
 </resources>

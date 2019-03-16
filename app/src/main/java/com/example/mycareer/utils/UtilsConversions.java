@@ -1,5 +1,7 @@
 package com.example.mycareer.utils;
 
+import java.util.Locale;
+
 public class UtilsConversions<Data>  {
 
     public static String convertScoreToString(int num){
@@ -12,7 +14,7 @@ public class UtilsConversions<Data>  {
                 n = "30L";
                 break;
             default:
-                n = num+"";
+                n = String.format(Locale.getDefault(),"%s", num);
         }
         return n;
     }
@@ -28,6 +30,21 @@ public class UtilsConversions<Data>  {
                 break;
             default:
                 n = Integer.parseInt(num);
+        }
+        return n;
+    }
+
+    public static double convertScoreToDouble(String num){
+        double n = 0;
+        switch(num){
+            case Costants.Strings.NOT_DONE_YET:
+                n = -1D;
+                break;
+            case "30L":
+                n = 30D;
+                break;
+            default:
+                n = Double.parseDouble(num);
         }
         return n;
     }

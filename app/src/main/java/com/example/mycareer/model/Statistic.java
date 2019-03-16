@@ -1,6 +1,7 @@
 package com.example.mycareer.model;
 
 import com.example.mycareer.utils.Costants;
+import com.example.mycareer.utils.UtilsConversions;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -102,8 +103,8 @@ public class Statistic {
     private double computeAvg(){
         double avg = 0;
         for (Course elem : courseList) {
-            double score = convertToNumber(elem.getScore());
-            double credit = convertToNumber(elem.getCredit());
+            double score = UtilsConversions.convertScoreToDouble(elem.getScore());
+            double credit = UtilsConversions.convertScoreToDouble(elem.getCredit());
             if(-1D != score){
                 avg += score * credit;
             }
@@ -113,21 +114,6 @@ public class Statistic {
         String avgStr = df.format(avg/this.getTotalCfuDone()).replace(',', '.');
 
         return (this.getTotalCfuDone() == 0) ? 0 : Double.parseDouble(avgStr);
-    }
-
-    private double convertToNumber(String num){
-        double n = 0;
-        switch(num){
-            case Costants.Strings.NOT_DONE_YET:
-                n = -1D;
-                break;
-            case "30L":
-                n = 30D;
-                break;
-            default:
-                n = Double.parseDouble(num);
-        }
-        return n;
     }
 
     private int computeMinDgr(){
@@ -149,8 +135,8 @@ public class Statistic {
     private int computeTotalCfuDone(){
         int sum_credit = 0;
         for (Course elem : courseList) {
-            double score = convertToNumber(elem.getScore());
-            double credit = convertToNumber(elem.getCredit());
+            double score = UtilsConversions.convertScoreToDouble(elem.getScore());
+            double credit = UtilsConversions.convertScoreToDouble(elem.getCredit());
             if(-1D != score)
                 sum_credit += credit;
         }
@@ -161,7 +147,7 @@ public class Statistic {
     private int computeTotalCfu(){
         int sum_credit = 0;
         for (Course elem : courseList) {
-            double credit = convertToNumber(elem.getCredit());
+            double credit = UtilsConversions.convertScoreToDouble(elem.getCredit());
             sum_credit += credit;
         }
         return sum_credit;
@@ -170,7 +156,7 @@ public class Statistic {
     private int computeTotalCoursesDone(){
         int count = 0;
         for (Course elem : courseList) {
-            double score = convertToNumber(elem.getScore());
+            double score = UtilsConversions.convertScoreToDouble(elem.getScore());
             if(-1D != score)
                 count++;
         }

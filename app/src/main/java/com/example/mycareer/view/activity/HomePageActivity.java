@@ -104,6 +104,10 @@ public class HomePageActivity extends BaseActivity implements HomePageView, Navi
                 Utils.showMessage(this,"Predictions!");
                 fragment = new PredictionFragment();
                 break;
+            case R.id.nav_info:
+                Utils.showMessage(this,"App Info!");
+                Utils.setIntent(this, AppInfoActivity.class);
+                break;
             case R.id.nav_log_out:
                 homePagePresenter.logOut();
                 break;

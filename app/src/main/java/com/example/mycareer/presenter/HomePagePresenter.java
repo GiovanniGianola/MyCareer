@@ -11,4 +11,7 @@ public interface HomePagePresenter extends BasePresenter<HomePageActivity> {
     void onStop();
 
     void handleCloseApp();
+
+    void onSelectedItem(int itemId);
+    void onDrawerClose();
 }

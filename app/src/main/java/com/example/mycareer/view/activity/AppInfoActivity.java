@@ -44,6 +44,7 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
         initListeners();
     }
 
+
     private void initUI() {
         cardViewAbout = findViewById(R.id.cardViewAbout);
         cardViewEraseData = findViewById(R.id.cardViewEraseData);

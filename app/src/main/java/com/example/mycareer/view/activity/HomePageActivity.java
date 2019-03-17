@@ -31,28 +31,26 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
-public class HomePageActivity extends BaseActivity implements HomePageView, NavigationView.OnNavigationItemSelectedListener {
+public class HomePageActivity extends BaseActivity implements HomePageView {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
-    FirebaseUser user;
+    private FirebaseUser user;
 
     private HomePagePresenter homePagePresenter;
 
-    private View mView;
     private ImageView profilePic;
     private TextView userName;
     private TextView userEmail;
     private NavigationView navigationView;
-
-    private Fragment fragment;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        mView = findViewById(R.id.activity_layout);
 
         initUI();
+        initListeners();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -61,73 +59,56 @@ public class HomePageActivity extends BaseActivity implements HomePageView, Navi
         homePagePresenter.initGoogleSetting();
         homePagePresenter.getCurrentUser();
 
-        displaySelectedScreen(R.id.nav_homepage);
+        startFragmentWithMessage("Homepage", new HomePageFragment());
     }
 
     private void initUI(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initListeners() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                homePagePresenter.onSelectedItem(menuItem.getItemId());
+                return true;
+            }
+        });
+
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                homePagePresenter.onDrawerClose();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
     @Override
     public Context getContext() {
         return this;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //calling the method displayselectedscreen and passing the id of selected menu
-        displaySelectedScreen(item.getItemId());
-        return true;
-    }
-
-    private void displaySelectedScreen(int itemId) {
-        //initializing the fragment object which is selected
-        switch (itemId) {
-            case R.id.nav_homepage:
-                Utils.showMessage(this,"Homepage");
-                fragment = new HomePageFragment();
-                break;
-            case R.id.nav_courses:
-                Utils.showMessage(this,"Courses!");
-                fragment = new CoursesFragment();
-                break;
-            case R.id.nav_predictions:
-                Utils.showMessage(this,"Predictions!");
-                fragment = new PredictionFragment();
-                break;
-            case R.id.nav_info:
-                Utils.showMessage(this,"App Info!");
-                Utils.setIntent(this, AppInfoActivity.class);
-                break;
-            case R.id.nav_settings:
-                Utils.showMessage(this,"Settings!");
-                Utils.setIntent(this, SettingsActivity.class);
-                break;
-            case R.id.nav_log_out:
-                homePagePresenter.logOut();
-                break;
-        }
-
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-        //replacing the fragment
-        if (fragment != null && (currentFragment == null || !currentFragment.getClass().equals(fragment.getClass()))) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment, fragment.getClass().getName());
-            ft.addToBackStack(null);
-            ft.commit();
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
@@ -143,13 +124,38 @@ public class HomePageActivity extends BaseActivity implements HomePageView, Navi
 
     @Override
     public void databaseError(String error) {
-        //Utils.showSnackbar(mView, "Firebase Database Error ! " + error);
         Utils.showMessage(this, "Firebase Database Error ! " + error);
     }
 
     @Override
     public void closeApp() {
         finish();
+    }
+
+    @Override
+    public void closeDrawer() {
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void startFragmentWithMessage(String message, Fragment destination) {
+        Utils.showMessage(this, message);
+
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        //replacing the fragment
+        if (destination != null && (currentFragment == null || !currentFragment.getClass().equals(destination.getClass()))) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.replace(R.id.content_frame, destination, destination.getClass().getName());
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+    }
+
+    @Override
+    public void startClassWithMessage(String message, Class destination) {
+        Utils.showMessage(this, message);
+        Utils.setIntent(this, destination);
     }
 
     private void updateUserUI(){
@@ -193,26 +199,5 @@ public class HomePageActivity extends BaseActivity implements HomePageView, Navi
             //super.onBackPressed();
             homePagePresenter.handleCloseApp();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

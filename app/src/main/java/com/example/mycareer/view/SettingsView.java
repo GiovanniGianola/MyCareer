@@ -1,5 +1,7 @@
 package com.example.mycareer.view;
 
+import android.view.MenuItem;
+
 import com.example.mycareer.base.BaseView;
 
 public interface SettingsView extends BaseView {

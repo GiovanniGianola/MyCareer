@@ -75,4 +75,8 @@
     <string name="settings_tot_credits">Total credits</string>
     <string name="settings_laude_value">Laude value</string>
 
+    <!-- Custom Dialog Predictions-->
+    <string name="custom_dialog_predictions_title">Credits</string>
+    <string name="custom_dialog_prediction_summary">Pick the credits for your next exam and check how your average ca change</string>
+
 </resources>

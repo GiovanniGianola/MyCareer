@@ -8,7 +8,12 @@ import android.util.Log;
 import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
+import com.example.mycareer.utils.Constants;
+import com.example.mycareer.utils.MyApplication;
+import com.example.mycareer.utils.SharedPrefManager;
 import com.example.mycareer.view.LoginView;
+import com.example.mycareer.view.activity.HomePageActivity;
+import com.example.mycareer.view.activity.SettingsActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -58,10 +63,18 @@ public class LoginPresenterImpl implements LoginPresenter {
         if (auth.getCurrentUser() != null) {
             FirebaseUser user = auth.getCurrentUser();
             createUpdateUser(user);
-            loginView.isLogin(true);
+
+            loginView.isLogin(true, checkSettings());
         }
         else
-            loginView.isLogin(false);
+            loginView.isLogin(false, null);
+    }
+
+    private Class checkSettings(){
+        if(SharedPrefManager.getIntPrefVal(MyApplication.getAppContext(), Constants.Strings.SPREF_TOT_CREDITS_KEY, -1) == -1)
+            return SettingsActivity.class;
+        else
+            return HomePageActivity.class;
     }
 
     @Override
@@ -88,8 +101,10 @@ public class LoginPresenterImpl implements LoginPresenter {
                         FirebaseUser user = auth.getCurrentUser();
                         createUpdateUser(user);
 
+
+
                         loginView.setProgressVisibility(true);
-                        loginView.loginFirebaseSuccess();
+                        loginView.loginFirebaseSuccess(checkSettings());
                     } else {
                         // If sign in fails, display a message to the user.
                         loginView.setProgressVisibility(false);

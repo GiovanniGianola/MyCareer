@@ -3,11 +3,13 @@ package com.example.mycareer.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.mycareer.model.Profile;
+
 public class SharedPrefManager {
     private static final String SETTINGS = "settings";
 
     public static SharedPreferences getSharedPref(Context mContext) {
-        SharedPreferences pref = mContext.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences(SETTINGS + "-" + Profile.getInstance().getUserId(), Context.MODE_PRIVATE);
 
         return pref;
     }

@@ -5,13 +5,22 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mycareer.R;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.utils.Utils;
 import com.example.mycareer.view.HomePageView;
+import com.example.mycareer.view.activity.AppInfoActivity;
 import com.example.mycareer.view.activity.HomePageActivity;
 import com.example.mycareer.view.activity.LoginActivity;
+import com.example.mycareer.view.activity.SettingsActivity;
+import com.example.mycareer.view.fragment.CoursesFragment;
+import com.example.mycareer.view.fragment.HomePageFragment;
+import com.example.mycareer.view.fragment.PredictionFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,6 +40,7 @@ public class HomePagePresenterImpl implements HomePagePresenter {
     private GoogleSignInClient googleSignInClient;
 
     private Activity context;
+    private int clickedNavItem = 0;
 
     public HomePagePresenterImpl(FirebaseAuth auth, final Activity context) {
         this.auth = auth;
@@ -122,5 +132,35 @@ public class HomePagePresenterImpl implements HomePagePresenter {
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onSelectedItem(int itemId) {
+        clickedNavItem = itemId;
+        homePageView.closeDrawer();
+    }
+
+    @Override
+    public void onDrawerClose() {
+        switch (clickedNavItem) {
+            case R.id.nav_homepage:
+                homePageView.startFragmentWithMessage("Homepage", new HomePageFragment());
+                break;
+            case R.id.nav_courses:
+                homePageView.startFragmentWithMessage("Courses", new CoursesFragment());
+                break;
+            case R.id.nav_predictions:
+                homePageView.startFragmentWithMessage("Predictions", new PredictionFragment());
+                break;
+            case R.id.nav_info:
+                homePageView.startClassWithMessage("App Info", AppInfoActivity.class);
+                break;
+            case R.id.nav_settings:
+                homePageView.startClassWithMessage("Settings", SettingsActivity.class);
+                break;
+            case R.id.nav_log_out:
+                logOut();
+                break;
+        }
     }
 }

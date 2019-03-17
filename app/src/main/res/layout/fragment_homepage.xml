@@ -72,7 +72,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="NaN"
+                        android:text="@string/nan"
                         android:textSize="30sp"
                         android:textStyle="bold"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -133,7 +133,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="NaN"
+                        android:text="@string/nan"
                         android:textSize="30sp"
                         android:textStyle="bold"
                         card_view:layout_constraintBottom_toBottomOf="parent"
@@ -181,51 +181,91 @@
                 <ProgressBar
                     android:id="@+id/simpleProgressBarMin"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
-                    android:layout_height="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:max="110"
                     android:progress="40"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView_gradeProjectionMin"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout_minMax"
                     app:layout_constraintTop_toBottomOf="@+id/simpleProgressBarMax" /><!--// 50 default progress value-->
 
                 <TextView
                     android:id="@+id/textView_gradeProjectionMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="NaN"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/nan"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/simpleProgressBarMin"
                     app:layout_constraintTop_toBottomOf="@+id/textView_gradeProjectionMax" />
 
                 <ProgressBar
                     android:id="@+id/simpleProgressBarMax"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="200dp"
-                    android:layout_height="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:max="110"
                     android:progress="50"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView_gradeProjectionMax"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout_minMax"
                     app:layout_constraintTop_toBottomOf="@+id/textView_gradeProjectionTitle" /><!--// 50 default progress value-->
 
                 <TextView
                     android:id="@+id/textView_gradeProjectionMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="NaN"
+                    android:text="@string/nan"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/simpleProgressBarMax"
                     app:layout_constraintTop_toBottomOf="@+id/textView_gradeProjectionTitle" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_minMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_gradeProjectionTitle">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Min"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Max"
+                        app:layout_constraintBottom_toTopOf="@+id/textView11"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

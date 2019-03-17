@@ -23,7 +23,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity  extends BaseActivity implements LoginView, View.OnClickListener {
+public class LoginActivity  extends BaseActivity implements LoginView {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int RC_SIGN_IN =  3;
 
@@ -32,7 +32,6 @@ public class LoginActivity  extends BaseActivity implements LoginView, View.OnCl
     private View mView;
 
     private FirebaseAuth mAuth;
-    private GoogleSignInOptions gso;
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
@@ -43,19 +42,35 @@ public class LoginActivity  extends BaseActivity implements LoginView, View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mView = findViewById(R.id.activity_layout);
-
-        signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(this);
-        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
-
         loginPresenter = new LoginPresenterImpl(mAuth);
+
+        initUI();
+        initListeners();
+
         loginPresenter.attachView(this);
         loginPresenter.checkLogin();
         loginPresenter.initGoogleSetting();
     }
+
+    private void initUI() {
+        mView = findViewById(R.id.activity_layout);
+
+        signInButton = findViewById(R.id.sign_in_button);
+        progressBar = findViewById(R.id.progressBar);
+    }
+
+    private void initListeners() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+    }
+
 
     @Override
     public Context getContext() {
@@ -63,11 +78,11 @@ public class LoginActivity  extends BaseActivity implements LoginView, View.OnCl
     }
 
     @Override
-    public void isLogin(boolean isLogin) {
+    public void isLogin(boolean isLogin, Class cls) {
         Log.d(TAG, "IsLogin: " + isLogin);
         if (isLogin) {
             Utils.showMessage(this, "Welcome back " + mAuth.getCurrentUser().getDisplayName() + "!");
-            Utils.setIntent(this, HomePageActivity.class);
+            Utils.setIntent(this, cls);
             finish();
         }
     }
@@ -95,9 +110,9 @@ public class LoginActivity  extends BaseActivity implements LoginView, View.OnCl
 
     @SuppressLint("ResourceType")
     @Override
-    public void loginFirebaseSuccess() {
+    public void loginFirebaseSuccess(Class cls) {
         Utils.showMessage(this, "Welcome " + account.getDisplayName() + "!");
-        Utils.setIntent(this, HomePageActivity.class);
+        Utils.setIntent(this, cls);
         finish();
     }
 
@@ -126,11 +141,5 @@ public class LoginActivity  extends BaseActivity implements LoginView, View.OnCl
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             loginPresenter.handleGoogleSignInResult(task);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 }

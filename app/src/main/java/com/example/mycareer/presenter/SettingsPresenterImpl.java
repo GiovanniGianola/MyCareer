@@ -2,6 +2,7 @@ package com.example.mycareer.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.MenuItem;
 
 import com.example.mycareer.R;
 import com.example.mycareer.model.Profile;
@@ -72,8 +73,6 @@ public class SettingsPresenterImpl implements SettingsPresenter {
             settingsView.onError(String.format(Locale.getDefault(), "%s %d", "The value must be greater than or equal to", Profile.getInstance().getStatistics().getTotalCfu()));
             return;
         }
-
-        SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_TOT_CREDITS_KEY, totCreditsVal);
         settingsView.setTotCredits(totCreditsVal);
     }
 
@@ -87,8 +86,6 @@ public class SettingsPresenterImpl implements SettingsPresenter {
             settingsView.onError(String.format(Locale.getDefault(), "%s", "The value must be between 30 and 39"));
             return;
         }
-
-        SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_LAUDE_VALUE_KEY, laudeValueVal);
         settingsView.setLaudeVal(laudeValueVal);
     }
 
@@ -99,8 +96,11 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void setOnClickListenerButtonSave() {
-        System.out.println(laudeValueVal + " - " + totCreditsVal);
-        if(laudeValueVal != 0 || totCreditsVal != 0)
-            settingsView.refreshApp();
+        if(laudeValueVal != 0)
+            SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_LAUDE_VALUE_KEY, laudeValueVal);
+        if(totCreditsVal != 0)
+            SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_TOT_CREDITS_KEY, totCreditsVal);
+
+        settingsView.refreshApp();
     }
 }

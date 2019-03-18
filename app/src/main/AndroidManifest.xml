@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_app_info"
+            android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity android:name=".view.activity.SplashActivity" android:theme="@style/SplashTheme">

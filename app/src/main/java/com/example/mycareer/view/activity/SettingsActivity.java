@@ -2,6 +2,7 @@ package com.example.mycareer.view.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -163,6 +164,7 @@ public class SettingsActivity  extends BaseActivity implements SettingsView {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
+        finish();
         return super.onOptionsItemSelected(item);
     }
 }

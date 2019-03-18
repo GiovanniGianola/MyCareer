@@ -131,6 +131,7 @@ public class AppInfoActivity extends BaseActivity implements AppInfoView {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
+        finish();
         return super.onOptionsItemSelected(item);
     }
 }

@@ -78,7 +78,7 @@ public class Statistic {
     }
 
     public int getCfuToBeDone() {
-        return this.totalCfu - totalCfuDone;
+        return this.maxCfu() - totalCfuDone;
     }
 
     public int getTotalCoursesDone() {

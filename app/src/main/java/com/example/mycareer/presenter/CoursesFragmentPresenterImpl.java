@@ -34,6 +34,8 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
     private static final String TAG = CoursesFragmentPresenterImpl.class.getSimpleName();
     private CourseFragmentView courseFragmentView;
 
+    private int coursePos = 0;
+
     public CoursesFragmentPresenterImpl(){
     }
 
@@ -68,105 +70,81 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
         }
     }
 
-    @Override
-    public void setOnClickListenrSaveButton(Button button, String purpose) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("grade: " + courseFragmentView.getInsertCourseGrade());
-
-                final Course c = new Course(
-                        courseFragmentView.getInsertCourseName(),
-                        courseFragmentView.getInsertCourseGrade(),
-                        courseFragmentView.getInsertCourseCredit(),
-                        courseFragmentView.getInsertCourseDate()
-                );
-
-                if(evaluateCourse(c.getName(),c.getCredit())) {
-                    if(checkCreditsNumbers(c.getCredit())) {
-                        Profile.getInstance().getFirebaseReference().child("courses").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                switch (purpose) {
-                                    case Constants.Strings.DIALOG_ADD_NEW_COURSE:
-                                        addNewCourse(dataSnapshot, c);
-                                        break;
-                                    case Constants.Strings.DIALOG_UPDATE_COURSE:
-                                        updateCourse(dataSnapshot, c);
-                                        break;
-                                }
-                                courseFragmentView.dismissDialog();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Log.d(TAG, "DatabaseError.");
-                                courseFragmentView.onDatabaseError("Database Error: " + databaseError.getMessage());
-                            }
-                        });
-                    }else{
-                        courseFragmentView.onInvalidCreditsNumber();
-                    }
-                }else{
-                    courseFragmentView.onInvalidCourse();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setOnClickListenrCancelButton(Button button) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Cancel btn Pressed: dismiss.");
-                courseFragmentView.dismissDialog();
-            }
-        });
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void setOnDatePickerListener(DatePicker courseDatePicker) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        courseDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+    public void setOnDatePickerListener(int year, int month, int dayOfMonth) {
+        Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
+        courseFragmentView.setCalendarView(year, month, dayOfMonth);
 
-            @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
-                courseFragmentView.setCalendarView(year, month, dayOfMonth);
-            }
-        });
     }
 
     @Override
-    public void initNumberPicker(NumberPicker numberPicker) {
-        // Using string values
-        // IMPORTANT! setMinValue to 1 and call setDisplayedValues after setMinValue and setMaxValue
-        String[] data = courseFragmentView.getContext().getResources().getStringArray(R.array.grade_arrays);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(data.length);
-        numberPicker.setDisplayedValues(data);
-        numberPicker.setValue(1);
-        // Set fading edge enabled
-        numberPicker.setFadingEdgeEnabled(true);
-        // Set scroller enabled
-        numberPicker.setScrollerEnabled(true);
-        // Set wrap selector wheel
-        numberPicker.setWrapSelectorWheel(false);
-        // OnValueChangeListener
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Log.d(TAG, String.format(Locale.US, "oldVal: %d, newVal: %d", oldVal, newVal));
-                System.out.println(oldVal + " - " + newVal);
-                setCalendarVisibility(newVal);
-                courseFragmentView.setGradeNumberPicker(newVal);
-            }
-        });
+    public void setOnClickListenerAddBtn() {
+        courseFragmentView.setVisibilityCalendar(false);
+        courseFragmentView.resetDialog();
+        courseFragmentView.showDialog("Add New Course", Constants.Strings.DIALOG_ADD_NEW_COURSE);
+    }
 
+    @Override
+    public void setOnClickListenerEditBtn(Course c) {
+        courseFragmentView.fillCustomDialog(c);
+        coursePos = Profile.getInstance().getCourseIndex(c);
+
+        setCalendarVisibility(UtilsConversions.convertScoreToInt(c.getScore())-16);
+        courseFragmentView.showDialog("Update Course", Constants.Strings.DIALOG_UPDATE_COURSE);
+    }
+
+    @Override
+    public void setOnClickListenerDeleteBtn(Course c) {
+        courseFragmentView.initAlerDialogOnDeleteCourse(c);
+    }
+
+    @Override
+    public void setOnClickListenerTextViewSave(String dialogRequest) {
+        final Course c = new Course(
+                courseFragmentView.getInsertCourseName(),
+                courseFragmentView.getInsertCourseGrade(),
+                courseFragmentView.getInsertCourseCredit(),
+                courseFragmentView.getInsertCourseDate()
+        );
+
+        if(evaluateCourse(c.getName(),c.getCredit())) {
+            if(checkCreditsNumbers(c.getCredit())) {
+                Profile.getInstance().getFirebaseReference().child("courses").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        switch (dialogRequest) {
+                            case Constants.Strings.DIALOG_ADD_NEW_COURSE:
+                                addNewCourse(dataSnapshot, c);
+                                break;
+                            case Constants.Strings.DIALOG_UPDATE_COURSE:
+                                updateCourse(dataSnapshot, c);
+                                break;
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "DatabaseError.");
+                        courseFragmentView.onDatabaseError("Database Error: " + databaseError.getMessage());
+                    }
+                });
+            }else{
+                courseFragmentView.onInvalidCreditsNumber();
+            }
+        }else{
+            courseFragmentView.onInvalidCourse();
+        }
+    }
+
+    @Override
+    public void setOnClickListenerTextViewCancel() {
+        courseFragmentView.dismissDialog();
+    }
+
+    @Override
+    public void setOnValueChangedListenerNumberPicker(int newVal) {
+        setCalendarVisibility(newVal);
+        courseFragmentView.setGradeNumberPicker(newVal);
     }
 
     private void setCalendarVisibility(int numberPickerIndex){
@@ -176,51 +154,39 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
             courseFragmentView.setVisibilityCalendar(true);
     }
 
-    int pos = 0;
-    @Override
-    public void checkCourse(Course course) {
-        if(course != null) {
-            courseFragmentView.fillCustomDialog(course);
-            pos = Profile.getInstance().getCourseIndex(course);
-
-            setCalendarVisibility(UtilsConversions.convertScoreToInt(course.getScore())-16);
-            System.out.println("score index: " + (UtilsConversions.convertScoreToInt(course.getScore())-16));
-        }
-    }
-
     @Override
     public void deleteCourse(Course course) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(courseFragmentView.getContext());
         alertDialogBuilder.setTitle("Delete " + course.getName());
         alertDialogBuilder
-                .setMessage("Are you sure?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        Profile.getInstance().getFirebaseReference().child("courses").child(course.getName()).removeValue()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Profile.getInstance().removeCourse(course);
-                                        courseFragmentView.onSuccessDeleteCourse("Course " + course.getName() + " deleted.");
-                                        courseFragmentView.updateListAdapterOnDeleteCourse(course);
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        //
-                                    }
-                                });
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
+            .setMessage("Are you sure?")
+            .setCancelable(false)
+            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    Profile.getInstance().getFirebaseReference().child("courses").child(course.getName()).removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Profile.getInstance().removeCourse(course);
+                                courseFragmentView.onSuccessDeleteCourse("Course " + course.getName() + " deleted.");
+                                courseFragmentView.updateListAdapterOnDeleteCourse(course);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //
+                            }
+                        });
+                }
+            })
+            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, just closec
+                    // the dialog box and do nothing
+                    dialog.cancel();
+                }
+            });
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
         // show it
@@ -257,6 +223,7 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
         updateUser(c);
         courseFragmentView.checkTextViewNoCourses(true);
         courseFragmentView.onSuccessCreateCourse("Course " + c.getName() + " added!");
+        courseFragmentView.dismissDialog();
     }
 
     private void updateCourse(DataSnapshot dataSnapshot, Course c){
@@ -265,9 +232,10 @@ public class CoursesFragmentPresenterImpl implements CoursesFragmentPresenter {
                 Profile.getInstance().getFirebaseReference().child("courses").child(c.getName()).setValue(c);
                 Log.d(TAG, "Course updated in DB.");
 
-                Profile.getInstance().updateCourse(c, pos);
+                Profile.getInstance().updateCourse(c, coursePos);
                 courseFragmentView.onSuccessUpdateCourse("Course " + c.getName() + " updated.");
-                courseFragmentView.updateListAdapterOnUpdateCourse(pos,c);
+                courseFragmentView.updateListAdapterOnUpdateCourse(coursePos,c);
+                courseFragmentView.dismissDialog();
                 return;
             }
         }

@@ -3,6 +3,7 @@ package com.example.mycareer.view.fragment;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.example.mycareer.view.PredictionFragmentView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -46,8 +48,8 @@ public class PredictionFragment extends BaseFragment implements PredictionFragme
     private PredictionsAdapter predictionsAdapter;
 
     private NumberPicker numberPicker;
-    private Button saveButton;
-    private Button cancelButton;
+    private TextView textView_save;
+    private TextView textView_cancel;
     private int numberPickerValue = 1;
 
     @Nullable
@@ -91,10 +93,16 @@ public class PredictionFragment extends BaseFragment implements PredictionFragme
         dialog.setContentView(R.layout.custom_dialog_predictions);
 
         numberPicker = dialog.findViewById(R.id.numberPicker);
-        saveButton = dialog.findViewById(R.id.btn_save);
-        cancelButton = dialog.findViewById(R.id.btn_cancel);
+        textView_save = dialog.findViewById(R.id.textView_save);
+        textView_cancel = dialog.findViewById(R.id.textView_cancel);
 
-        predictionFragmentPresenter.initNumberPicker(numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setValue(1);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        // Set fading edge enabled
+        numberPicker.setWrapSelectorWheel(false);
+
+        predictionFragmentPresenter.initNumberPickerValues();
     }
 
     private void initListeners(){
@@ -105,24 +113,38 @@ public class PredictionFragment extends BaseFragment implements PredictionFragme
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        textView_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                predictionFragmentPresenter.setOnClickListenerSaveButton();
+                predictionFragmentPresenter.setOnClickListenerTextViewSave();
+            }
+        });
+        textView_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                predictionFragmentPresenter.setOnClickListenerTextViewCancel();
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        // OnValueChangeListener
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onClick(View v) {
-                predictionFragmentPresenter.setOnClickListenerCancelButton();
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                Log.d(TAG, String.format(Locale.US, "oldVal: %d, newVal: %d", oldVal, newVal));
+                predictionFragmentPresenter.setOnValueChangedListenerNumberPicker(newVal);
             }
-        });;
+        });
     }
 
     @Override
     public void setNumberPicker(int val) {
         numberPickerValue = val;
+    }
+
+    @Override
+    public void setNumberPickerValues(String[] data) {
+        numberPicker.setMaxValue(data.length);
+        numberPicker.setDisplayedValues(data);
     }
 
     @Override

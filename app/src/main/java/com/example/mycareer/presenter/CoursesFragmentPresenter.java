@@ -15,13 +15,13 @@ public interface CoursesFragmentPresenter extends BaseFragmentPresenter<CoursesF
     void checkTextViewNoCourses();
     void onScrolled(int dy, boolean isShown);
 
-    void setOnClickListenrSaveButton(Button button, String purpose);
-    void setOnClickListenrCancelButton(Button button);
-    void setOnDatePickerListener(DatePicker courseDatePicker);
-
-    void initNumberPicker(NumberPicker numberPicker);
-
-    void checkCourse(Course course);
+    void setOnDatePickerListener(int year, int month, int dayOfMonth);
+    void setOnClickListenerAddBtn();
+    void setOnClickListenerEditBtn(Course c);
+    void setOnClickListenerDeleteBtn(Course c);
+    void setOnClickListenerTextViewSave(String dialogRequest);
+    void setOnClickListenerTextViewCancel();
+    void setOnValueChangedListenerNumberPicker(int newVal);
 
     void deleteCourse(Course course);
 

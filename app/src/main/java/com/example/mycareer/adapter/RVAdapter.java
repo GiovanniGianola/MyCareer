@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.mycareer.R;
 import com.example.mycareer.model.Course;
+import com.example.mycareer.presenter.CoursesFragmentPresenter;
+import com.example.mycareer.presenter.CoursesFragmentPresenterImpl;
 import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.example.mycareer.view.CourseFragmentView;
@@ -31,6 +33,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
     private List<Course> dataModel;
     Context mContext;
     private CourseFragmentView courseFragmentView;
+    private CoursesFragmentPresenter coursesFragmentPresenter;
 
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -70,6 +73,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
 
     public void detachView() {
         courseFragmentView = null;
+    }
+
+    public void setPresenter(CoursesFragmentPresenter coursesFragmentPresenter){
+        this.coursesFragmentPresenter = coursesFragmentPresenter;
     }
 
     public RVAdapter(Context context){
@@ -157,11 +164,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
     //----------------------------------------------------------------------------------------------
 
     private void deleteCourse(final Course course){
-        courseFragmentView.initAlerDialogOnDeleteCourse(course);
+        coursesFragmentPresenter.setOnClickListenerDeleteBtn(course);
     }
 
     private void editCourse(Course course) {
-        courseFragmentView.initCustomDialog(mContext.getResources().getString(R.string.update_course), course);
+        coursesFragmentPresenter.setOnClickListenerEditBtn(course);
     }
 
     private boolean checkLaude(Course course){

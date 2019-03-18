@@ -7,6 +7,7 @@ import com.example.mycareer.model.Course;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.model.Statistic;
 import com.example.mycareer.utils.Constants;
+import com.example.mycareer.utils.UtilsConversions;
 import com.example.mycareer.view.HomePageFragmentView;
 import com.example.mycareer.view.fragment.HomePageFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -74,30 +75,15 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
 
         if(courseList != null) {
             for (int i = 0; i < courseList.size(); i++) {
-                int cNumber = convertToNumberInt(courseList.get(i).getScore());
+                int cNumber = UtilsConversions.convertScoreToInt(courseList.get(i).getScore());
 
                 System.out.println(cNumber + " - " + courseList.get(i).getScore());
 
-                if (cNumber != -1)
+                if (cNumber != 17)
                     gradeList[cNumber - 18] += 1;
             }
             homePageFragmentView.setBarChartGrades(gradeList);
         }
-    }
-
-    private int convertToNumberInt(String num){
-        int n = 0;
-        switch(num){
-            case Constants.Strings.NOT_DONE_YET:
-                n = -1;
-                break;
-            case "30L":
-                n = 31;
-                break;
-            default:
-                n = Integer.parseInt(num);
-        }
-        return n;
     }
 
     @Override
@@ -113,13 +99,13 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
             });
 
             for (int x = 0; x < courseList.size(); x++) {
-                if(convertToNumberFloat(courseList.get(x).getScore()) != -1f) {
+                if(UtilsConversions.convertScoreToFloat(courseList.get(x).getScore()) != -1f) {
                     dates.add(courseList.get(x).getDate().getTime());
                 }
             }
 
             for (int x = 0; x < courseList.size(); x++) {
-                if(convertToNumberFloat(courseList.get(x).getScore()) == -1f)
+                if(UtilsConversions.convertScoreToFloat(courseList.get(x).getScore()) == -1f)
                     courseList.remove(x--);
             }
 
@@ -141,33 +127,16 @@ public class HomePageFragmentPresenterImpl implements HomePageFragmentPresenter 
         float avg = 0;
         int sum_credit = 0;
         for (Course elem : list) {
-            float score = convertToNumberFloat(elem.getScore());
-            float credit = convertToNumberFloat(elem.getCredit());
+            float score = UtilsConversions.convertScoreToFloat(elem.getScore());
+            float credit = UtilsConversions.convertScoreToFloat(elem.getCredit());
             if(-1f != score){
                 avg += score * credit;
                 sum_credit += credit;
             }
         }
         df = new DecimalFormat("###.##");
-
         String avgStr = df.format(avg/sum_credit).replace(',', '.');
-
         return (sum_credit == 0) ? 0 : Float.parseFloat(avgStr);
-    }
-
-    private float convertToNumberFloat(String num){
-        float n = 0;
-        switch(num){
-            case Constants.Strings.NOT_DONE_YET:
-                n = -1f;
-                break;
-            case "30L":
-                n = 30f;
-                break;
-            default:
-                n =  Float.parseFloat(num);
-        }
-        return n;
     }
 
     private void downloadCourses(){

@@ -2,12 +2,15 @@ package com.example.mycareer.view.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.UtilsConversions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,8 +38,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class CoursesFragment extends BaseFragment implements CourseFragmentView, View.OnClickListener{
+public class CoursesFragment extends BaseFragment implements CourseFragmentView{
     private static final String TAG = CoursesFragment.class.getSimpleName();
     private CoursesFragmentPresenter coursesFragmentPresenter;
 
@@ -54,7 +58,10 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     private Dialog dialog;
     private DatePicker courseDatePicker;
     private NumberPicker numberPicker;
+    private TextView textView_save;
+    private TextView textView_cancel;
     private int numberPickerValue = 1;
+    private String dialogRequest;
 
     private List<Course> courseList;
 
@@ -64,28 +71,34 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
         return inflater.inflate(R.layout.fragment_courses, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("MyCourses");
 
-        initUI();
-
         coursesFragmentPresenter = new CoursesFragmentPresenterImpl();
         coursesFragmentPresenter.attachView(this);
+
+        initUI();
+        initCustomDialog();
+        initListeners();
+
         coursesFragmentPresenter.checkTextViewNoCourses();
         coursesFragmentPresenter.initData();
     }
 
     private void initUI(){
         add_btn = getView().findViewById(R.id.add_btn);
-        add_btn.setOnClickListener(this);
         mRecyclerView = getView().findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initListeners() {
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -96,7 +109,75 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coursesFragmentPresenter.setOnClickListenerAddBtn();
+            }
+        });
+
+        textView_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coursesFragmentPresenter.setOnClickListenerTextViewSave(dialogRequest);
+            }
+        });
+        textView_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                coursesFragmentPresenter.setOnClickListenerTextViewCancel();
+            }
+        });
+
+        courseDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                coursesFragmentPresenter.setOnDatePickerListener(year, month, dayOfMonth);
+            }
+        });
+
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                coursesFragmentPresenter.setOnValueChangedListenerNumberPicker(newVal);
+            }
+        });
     }
+
+    private void initCustomDialog(){
+        // custom dialog
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.custom_dialog_add_course);
+
+        // set the custom dialog components
+        dialogTitle = dialog.findViewById(R.id.dialog_title);
+        courseName = dialog.findViewById(R.id.course_name);
+        courseCredit = dialog.findViewById(R.id.course_credit);
+        courseDatePicker = dialog.findViewById(R.id.datePicker_course_date);
+        errorField = dialog.findViewById(R.id.error_field);
+        numberPicker = dialog.findViewById(R.id.number_picker);
+        textView_save = dialog.findViewById(R.id.textView_save);
+        textView_cancel = dialog.findViewById(R.id.textView_cancel);
+
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        //courseDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
+
+        String[] data = getResources().getStringArray(R.array.grade_arrays);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(data.length);
+        numberPicker.setDisplayedValues(data);
+        numberPicker.setValue(1);
+        // Set fading edge enabled
+        numberPicker.setFadingEdgeEnabled(true);
+        // Set scroller enabled
+        numberPicker.setScrollerEnabled(true);
+        // Set wrap selector wheel
+        numberPicker.setWrapSelectorWheel(false);
+    }
+
 
     @Override
     public void addDatas(List<Course> list) {
@@ -104,6 +185,7 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
             this.courseList = list;
             rvAdapter = new RVAdapter(courseList, getActivity());
             rvAdapter.attachView(this);
+            rvAdapter.setPresenter(coursesFragmentPresenter);
             mRecyclerView.setAdapter(rvAdapter);
             rvAdapter.runLayoutAnimation(mRecyclerView);
         }
@@ -135,12 +217,20 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
 
     @Override
     public void setCalendarView(int year, int month, int day) {
+        System.out.println("YEAR: " + year + " MONTH: " + month + " DAY: " + day);
         calendar.set(year, month, day, 0, 0);
     }
 
     @Override
     public void setGradeNumberPicker(int val) {
         numberPickerValue = val;
+    }
+
+    @Override
+    public void showDialog(String title, String dialogRequest) {
+        this.dialogRequest = dialogRequest;
+        dialogTitle.setText(title);
+        dialog.show();
     }
 
     @Override
@@ -211,50 +301,16 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     }
 
     @Override
-    public void onClick(View v) {
-        initCustomDialog(this.getResources().getString(R.string.add_course), null);
-    }
-
-    @Override
-    public void initCustomDialog(String title, @Nullable final Course course){
-        // custom dialog
-        dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.custom_dialog);
-
-        // set the custom dialog components
-        dialogTitle = dialog.findViewById(R.id.dialog_title);
-        courseName = dialog.findViewById(R.id.course_name);
-        courseCredit = dialog.findViewById(R.id.course_credit);
-        courseDatePicker = dialog.findViewById(R.id.datePicker_course_date);
-        errorField = dialog.findViewById(R.id.error_field);
-        calendar = Calendar.getInstance();
-        numberPicker = dialog.findViewById(R.id.number_picker);
-
-        dialogTitle.setText(title);
-
-        coursesFragmentPresenter.initNumberPicker(numberPicker);
-        coursesFragmentPresenter.setOnDatePickerListener(courseDatePicker);
-
-        coursesFragmentPresenter.checkCourse(course);
-
-        Button saveButton = dialog.findViewById(R.id.btn_save);
-        Button cancelButton = dialog.findViewById(R.id.btn_cancel);
-        if(course == null)
-            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Constants.Strings.DIALOG_ADD_NEW_COURSE);
-        else
-            coursesFragmentPresenter.setOnClickListenrSaveButton(saveButton, Constants.Strings.DIALOG_UPDATE_COURSE);
-        coursesFragmentPresenter.setOnClickListenrCancelButton(cancelButton);
-
-        dialog.show();
-    }
-
-    @Override
     public void fillCustomDialog(Course course) {
         System.out.println("SCORE: " + (UtilsConversions.convertScoreToInt(course.getScore())-16));
         courseName.setText(course.getName());
         courseName.setEnabled(false);
         numberPicker.setValue(UtilsConversions.convertScoreToInt(course.getScore())-16);
         courseCredit.setText(course.getCredit());
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(course.getDate());
+        courseDatePicker.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -272,6 +328,16 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView,
     public void updateListAdapterOnDeleteCourse(Course course) {
         this.courseList.remove(course);
         rvAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void resetDialog() {
+        courseName.setText("");
+        courseCredit.setText("");
+        Calendar c = Calendar.getInstance();
+        courseDatePicker.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        errorField.setText("");
+        numberPicker.setValue(1);
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package com.example.mycareer.view;
 
 import com.example.mycareer.base.BaseFragmentView;
 import com.example.mycareer.model.Course;
+import com.example.mycareer.presenter.CoursesFragmentPresenter;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ public interface CourseFragmentView extends BaseFragmentView {
     void setVisibilityCalendar(boolean visibility);
     void setCalendarView(int year, int month, int day);
     void setGradeNumberPicker(int val);
+    void showDialog(String title, String dialogRequest);
     void dismissDialog();
     void updateListAdapterOnNewCourse(int pos, Course c);
     void updateListAdapterOnUpdateCourse(int pos, Course c);
@@ -34,11 +36,11 @@ public interface CourseFragmentView extends BaseFragmentView {
     String getInsertCourseCredit();
     Date getInsertCourseDate();
 
-    void initCustomDialog(String title, @Nullable final Course course);
     void fillCustomDialog(Course course);
 
     void initAlerDialogOnDeleteCourse(Course course);
     void onSuccessDeleteCourse(String message);
     void updateListAdapterOnDeleteCourse(Course course);
 
+    void resetDialog();
 }

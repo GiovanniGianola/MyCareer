@@ -106,11 +106,11 @@ public class SettingsActivity  extends BaseActivity implements SettingsView {
     private void initCustomDialog() {
         // custom dialog
         dialog = new Dialog(this);
-        dialog.setContentView(R.layout.textview_dialog);
+        dialog.setContentView(R.layout.custom_dialog_settings);
 
         textView_dialogTitle = dialog.findViewById(R.id.textView_dialogTitle);
         editText = dialog.findViewById(R.id.editText_number);
-        textView_ok = dialog.findViewById(R.id.textView_ok);
+        textView_ok = dialog.findViewById(R.id.textView_save);
         textView_cancel = dialog.findViewById(R.id.textView_cancel);
     }
 

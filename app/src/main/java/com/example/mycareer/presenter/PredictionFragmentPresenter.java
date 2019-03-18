@@ -6,12 +6,12 @@ import com.example.mycareer.base.BaseFragmentPresenter;
 import com.example.mycareer.view.fragment.PredictionFragment;
 
 public interface PredictionFragmentPresenter extends BaseFragmentPresenter<PredictionFragment> {
-    void showCustomDialog();
-
     void setOnClickListenerCreditsButton();
-    void setOnClickListenerSaveButton();
-    void setOnClickListenerCancelButton();
+    void setOnClickListenerTextViewSave();
+    void setOnClickListenerTextViewCancel();
 
-    void initNumberPicker(NumberPicker numberPicker);
+    void setOnValueChangedListenerNumberPicker(int newVal);
+
+    void initNumberPickerValues();
     void loadDataInFragment();
 }

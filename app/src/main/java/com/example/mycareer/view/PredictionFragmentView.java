@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PredictionFragmentView extends BaseFragmentView {
     void setNumberPicker(int val);
+    void setNumberPickerValues(String[] data);
     int getNumberPickerValue();
 
     void showDialog();

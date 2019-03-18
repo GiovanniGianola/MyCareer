@@ -77,6 +77,6 @@
 
     <!-- Custom Dialog Predictions-->
     <string name="custom_dialog_predictions_title">Credits</string>
-    <string name="custom_dialog_prediction_summary">Pick the credits for your next exam and check how your average ca change</string>
+    <string name="custom_dialog_prediction_summary">Pick the credits for your next exam and check how your average can change</string>
 
 </resources>

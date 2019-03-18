@@ -51,4 +51,20 @@ public class UtilsConversions<Data>  {
         }
         return n;
     }
+
+    public static float convertScoreToFloat(String num){
+        float n = 0;
+        float laude = SharedPrefManager.getIntPrefVal(MyApplication.getAppContext(), Constants.Strings.SPREF_LAUDE_VALUE_KEY, 30);
+        switch(num){
+            case Constants.Strings.NOT_DONE_YET:
+                n = -1f;
+                break;
+            case "30L":
+                n = laude;
+                break;
+            default:
+                n =  Float.parseFloat(num);
+        }
+        return n;
+    }
 }

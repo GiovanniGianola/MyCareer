@@ -43,17 +43,12 @@ public class PredictionFragmentPresenterImpl implements PredictionFragmentPresen
     }
 
     @Override
-    public void showCustomDialog() {
-
-    }
-
-    @Override
     public void setOnClickListenerCreditsButton() {
         predictionFragmentView.showDialog();
     }
 
     @Override
-    public void setOnClickListenerSaveButton() {
+    public void setOnClickListenerTextViewSave() {
         predictionFragmentView.dismissDialog();
         numberPickerValue = predictionFragmentView.getNumberPickerValue();
 
@@ -66,6 +61,32 @@ public class PredictionFragmentPresenterImpl implements PredictionFragmentPresen
 
         predictionFragmentView.setMinAvg(minAvg);
         predictionFragmentView.setMaxAvg(maxAvg);
+    }
+
+    @Override
+    public void setOnClickListenerTextViewCancel() {
+        predictionFragmentView.dismissDialog();
+    }
+
+    @Override
+    public void setOnValueChangedListenerNumberPicker(int newVal) {
+        predictionFragmentView.setNumberPicker(newVal);
+    }
+
+    @Override
+    public void initNumberPickerValues() {
+        int arraySize = Math.max(Profile.getInstance().getStatistics().getCfuToBeDone(), 20);
+        data = new String[arraySize];
+
+        for(int i = 1; i <= data.length; i ++)
+            data[i-1] = String.format("%s", i);
+
+        predictionFragmentView.setNumberPickerValues(data);
+    }
+
+    @Override
+    public void loadDataInFragment() {
+        predictionFragmentView.setCurrentAverage(userStats.getAvg());
     }
 
     private void initEntriesData() {
@@ -92,42 +113,5 @@ public class PredictionFragmentPresenterImpl implements PredictionFragmentPresen
         }
         minAvg = predictionEntryList.get(predictionEntryList.size()-1).getNewAvg();
         maxAvg = predictionEntryList.get(0).getNewAvg();
-    }
-
-    @Override
-    public void setOnClickListenerCancelButton() {
-        predictionFragmentView.dismissDialog();
-    }
-
-    @Override
-    public void initNumberPicker(NumberPicker numberPicker) {
-        int arraySize = Math.max(Profile.getInstance().getStatistics().getCfuToBeDone(), 20);
-        data = new String[arraySize];
-
-        for(int i = 1; i <= data.length; i ++)
-            data[i-1] = String.format("%s", i);
-
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(data.length);
-        numberPicker.setDisplayedValues(data);
-        numberPicker.setValue(1);
-        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        // Set fading edge enabled
-        numberPicker.setWrapSelectorWheel(false);
-
-        // OnValueChangeListener
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Log.d(TAG, String.format(Locale.US, "oldVal: %d, newVal: %d", oldVal, newVal));
-                System.out.println(oldVal + " - " + newVal);
-                predictionFragmentView.setNumberPicker(newVal);
-            }
-        });
-    }
-
-    @Override
-    public void loadDataInFragment() {
-        predictionFragmentView.setCurrentAverage(userStats.getAvg());
     }
 }

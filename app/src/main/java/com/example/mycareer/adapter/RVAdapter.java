@@ -131,7 +131,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
 
     @Override
     public void onClick(final View v) {
-
         int position=(Integer) v.getTag();
         Course object= getItem(position);
         final Course c = object;

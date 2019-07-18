@@ -18,7 +18,7 @@
             android:title="@string/item_predictions" />
     </group>
 
-    <item android:title="Application">
+    <item android:title="@string/menu_app">
         <menu>
             <item
                 android:id="@+id/nav_settings"
@@ -34,5 +34,18 @@
                 android:title="@string/item_log_out" />
         </menu>
     </item>
+
+    <group android:checkableBehavior="single"
+        android:visible="false"
+        android:id="@+id/profiles_menu">
+        <item android:title="@string/menu_admin">
+            <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_profiles"
+                android:title="@string/item_profiles" />
+            </menu>
+        </item>
+    </group>
 
 </menu>

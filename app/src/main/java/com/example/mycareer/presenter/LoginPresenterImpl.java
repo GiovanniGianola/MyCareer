@@ -101,8 +101,6 @@ public class LoginPresenterImpl implements LoginPresenter {
                         FirebaseUser user = auth.getCurrentUser();
                         createUpdateUser(user);
 
-
-
                         loginView.setProgressVisibility(true);
                         loginView.loginFirebaseSuccess(checkSettings());
                     } else {
@@ -134,6 +132,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         user.setName(currentUser.getDisplayName());
         user.setEmail(currentUser.getEmail());
         user.setPhotoUri(currentUser.getPhotoUrl());
+        //user.setAdmin(false);
 
         this.mFirebaseInstance = FirebaseDatabase.getInstance();
         // get reference to 'users' node
@@ -145,7 +144,28 @@ public class LoginPresenterImpl implements LoginPresenter {
         if (!TextUtils.isEmpty(user.getEmail()))
             this.mFirebaseDatabase.child(user.getUserId()).child("email").setValue(user.getEmail());
 
+        this.mFirebaseDatabase.child(user.getUserId()).child("profilePic").setValue(user.getPhotoUri().toString());
+
         downloadCourses(currentUser);
+        setAdmin(currentUser);
+    }
+
+    private void setAdmin(FirebaseUser user){
+        mFirebaseInstance.getReference("users/" + user.getUid()).child("isAdmin").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null) {
+                    Profile.getInstance().setAdmin((boolean) dataSnapshot.getValue());
+                }
+                else
+                    mFirebaseDatabase.child(user.getUid()).child("isAdmin").setValue(false);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "Firebase Database Error: " + databaseError.getMessage());
+            }
+        });
     }
 
     private void downloadCourses(FirebaseUser user){
@@ -162,8 +182,8 @@ public class LoginPresenterImpl implements LoginPresenter {
                 Log.d(TAG, "Data Retrived: " + courseList);
             }
             @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w(TAG, "Firebase Database Error: " + error.getMessage());
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "Firebase Database Error: " + databaseError.getMessage());
             }
         });
     }

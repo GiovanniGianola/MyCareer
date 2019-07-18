@@ -123,19 +123,27 @@ public class Statistic {
     }
 
     private int computeMinDgr(){
-        df = new DecimalFormat("###.##");
+        df = new DecimalFormat("###.###");
         double avg = getAvg();
-        double grade = (int) ((avg/30.0*110) + getMinTh());
+        double grade = ((avg/30.0*110) + getMinTh());
 
-        return Integer.parseInt(df.format((grade > 110) ? 110 : grade));
+        try {
+            return Math.round(Float.parseFloat(df.format((grade > 110) ? 110 : grade)));
+        }catch(java.lang.NumberFormatException e){
+            return Math.round(Float.parseFloat(df.format((grade > 110) ? 110 : grade).replace(",", ".")));
+        }
     }
 
     private int computeMaxDgr(){
-        df = new DecimalFormat("###.##");
+        df = new DecimalFormat("###.###");
         double avg = getAvg();
-        double grade = (int) ((avg/30.0*110) + getMaxTh());
+        double grade = ((avg/30.0*110) + getMaxTh());
 
-        return Integer.parseInt(df.format((grade > 110) ? 110 : grade));
+        try {
+            return Math.round(Float.parseFloat(df.format((grade > 110) ? 110 : grade)));
+        }catch(java.lang.NumberFormatException e){
+            return Math.round(Float.parseFloat(df.format((grade > 110) ? 110 : grade).replace(",", ".")));
+        }
     }
 
     private int computeTotalCfuDone(){

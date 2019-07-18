@@ -17,4 +17,6 @@ public interface HomePageView extends BaseView {
 
     void startFragmentWithMessage(String message, Fragment destination);
     void startClassWithMessage(String message, Class destination);
+
+    void addProfileMenu(int id);
 }

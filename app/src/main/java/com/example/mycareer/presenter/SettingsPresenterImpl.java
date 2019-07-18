@@ -1,8 +1,6 @@
 package com.example.mycareer.presenter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.MenuItem;
 
 import com.example.mycareer.R;
 import com.example.mycareer.model.Profile;
@@ -10,6 +8,9 @@ import com.example.mycareer.utils.Constants;
 import com.example.mycareer.utils.SharedPrefManager;
 import com.example.mycareer.view.SettingsView;
 import com.example.mycareer.view.activity.SettingsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 
@@ -24,8 +25,13 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     private int totCreditsVal = 0;
     private int laudeValueVal = 0;
 
+    private FirebaseAuth auth ;
+    private FirebaseDatabase mFirebaseInstance;
+    private DatabaseReference mFirebaseDatabase;
+
     public SettingsPresenterImpl(final Context context){
         this.context = context;
+        mFirebaseInstance = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -96,11 +102,31 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void setOnClickListenerButtonSave() {
-        if(laudeValueVal != 0)
+        if(laudeValueVal != 0) {
+            uploadSettingLAudeValue();
             SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_LAUDE_VALUE_KEY, laudeValueVal);
-        if(totCreditsVal != 0)
+        }
+        if(totCreditsVal != 0) {
+            uploadSettingTotCredits();
             SharedPrefManager.setIntPrefVal(settingsView.getContext(), Constants.Strings.SPREF_TOT_CREDITS_KEY, totCreditsVal);
+        }
 
         settingsView.refreshApp();
+    }
+
+
+
+    private void uploadSettingTotCredits(){
+        this.mFirebaseDatabase = this.mFirebaseInstance.getReference("users").child(Profile.getInstance().getUserId()).child("settings");
+        this.mFirebaseDatabase.child("totCredits").setValue(totCreditsVal);
+
+        Profile.getInstance().getSettings().setTotCredits(totCreditsVal);
+    }
+
+    private void uploadSettingLAudeValue(){
+        this.mFirebaseDatabase = this.mFirebaseInstance.getReference("users").child(Profile.getInstance().getUserId()).child("settings");
+        this.mFirebaseDatabase.child("laudeValue").setValue(laudeValueVal);
+
+        Profile.getInstance().getSettings().setLaudeValue(laudeValueVal);
     }
 }

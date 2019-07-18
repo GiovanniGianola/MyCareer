@@ -3,6 +3,7 @@
     <string name="title_activity_home_page">Homepage</string>
     <string name="title_activity_app_info">App Info</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_profile">Profile</string>
 
     <string name="nan">NaN</string>
 
@@ -19,6 +20,10 @@
     <string name="item_settings">Settings</string>
     <string name="item_info">App info</string>
     <string name="item_log_out">Log Out</string>
+    <string name="item_profiles">Profiles</string>
+
+    <string name="menu_app">Application</string>
+    <string name="menu_admin">Admin</string>
 
     <!-- Strings related to Settings -->
     <string name="action_settings">Settings</string>
@@ -79,5 +84,13 @@
     <!-- Custom Dialog Predictions-->
     <string name="custom_dialog_predictions_title">Credits</string>
     <string name="custom_dialog_prediction_summary">Pick the credits for your next exam and check how your average can change</string>
+
+    <!-- profile activity -->
+    <string name="title_diagrams">Diagrams</string>
+    <string name="title_courses">Courses</string>
+    <string name="textview_uid">uid</string>
+
+    <string name="image_transition_name" translatable="false">image_transition_name</string>
+
 
 </resources>

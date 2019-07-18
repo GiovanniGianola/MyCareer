@@ -333,6 +333,7 @@ public class CoursesFragment extends BaseFragment implements CourseFragmentView{
     @Override
     public void resetDialog() {
         courseName.setText("");
+        courseName.setEnabled(true);
         courseCredit.setText("");
         Calendar c = Calendar.getInstance();
         courseDatePicker.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));

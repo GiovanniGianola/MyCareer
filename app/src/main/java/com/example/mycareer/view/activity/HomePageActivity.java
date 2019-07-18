@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
-import com.example.mycareer.view.fragment.PredictionFragment;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,8 +11,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ import com.example.mycareer.presenter.HomePagePresenter;
 import com.example.mycareer.presenter.HomePagePresenterImpl;
 import com.example.mycareer.utils.Utils;
 import com.example.mycareer.view.HomePageView;
-import com.example.mycareer.view.fragment.CoursesFragment;
 import com.example.mycareer.view.fragment.HomePageFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,7 +91,7 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
+                homePagePresenter.onDrawerOpened();
             }
 
             @Override
@@ -158,12 +158,18 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
         Utils.setIntent(this, destination);
     }
 
+    @Override
+    public void addProfileMenu(int id) {
+        Menu menu = navigationView.getMenu();
+        menu.setGroupVisible(R.id.profiles_menu, true);
+    }
+
     private void updateUserUI(){
         View hView =  navigationView.getHeaderView(0);
 
-        profilePic = hView.findViewById(R.id.profile_pic);
-        userName = hView.findViewById(R.id.user_name);
-        userEmail = hView.findViewById(R.id.user_email);
+        profilePic = hView.findViewById(R.id.imageview_profilePic);
+        userName = hView.findViewById(R.id.textview_userName);
+        userEmail = hView.findViewById(R.id.textview_userEmail);
 
         userName.setText(user.getDisplayName());
         userEmail.setText(user.getEmail());

@@ -5,12 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mycareer.R;
+import com.example.mycareer.admin.view.fragment.ProfileFragment;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.utils.Utils;
 import com.example.mycareer.view.HomePageView;
@@ -32,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class HomePagePresenterImpl implements HomePagePresenter {
     private static final String TAG = HomePagePresenterImpl.class.getSimpleName();
+    private static final int PROFILE_ID = 5;
     private HomePageView homePageView;
 
     private FirebaseAuth auth ;
@@ -161,6 +159,15 @@ public class HomePagePresenterImpl implements HomePagePresenter {
             case R.id.nav_log_out:
                 logOut();
                 break;
+            case R.id.nav_profile:
+                homePageView.startFragmentWithMessage("Profiles", new ProfileFragment());
+                break;
         }
+    }
+
+    @Override
+    public void onDrawerOpened() {
+        if(Profile.getInstance().isAdmin())
+            homePageView.addProfileMenu(PROFILE_ID);
     }
 }

@@ -16,6 +16,8 @@ public class Profile implements Serializable {
     private String name;
     private String userId;
     private Uri photoUri;
+    private boolean isAdmin;
+    private Settings settings;
 
     private Statistic stats;
 
@@ -31,6 +33,7 @@ public class Profile implements Serializable {
         }
 
         this.stats = new Statistic();
+        this.settings = new Settings();
     }
 
     public static Profile getInstance(){
@@ -38,6 +41,14 @@ public class Profile implements Serializable {
             sSoleInstance = new Profile();
         }
         return sSoleInstance;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     public void reset(){
@@ -74,6 +85,14 @@ public class Profile implements Serializable {
 
     public void setPhotoUri(Uri photoUri) {
         this.photoUri = photoUri;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public List<Course> getCourseList() {

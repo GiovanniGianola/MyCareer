@@ -13,6 +13,11 @@ This application was created only for the purpose of practicing google authentic
 
 Here are some screenshots of the application:
 
+![Homepage1](https://github.com/GiovanniGianola/MyCareer/blob/master/screenshot/33.jpg?raw=true)
+![Homepage2](https://github.com/GiovanniGianola/MyCareer/blob/master/screenshot/22.jpg?raw=true)
+![Courses](https://github.com/GiovanniGianola/MyCareer/blob/master/screenshot/11.jpg?raw=true)
+![Prediction](https://github.com/GiovanniGianola/MyCareer/blob/master/screenshot/44.jpg?raw=true)
+
 Setup steps
 ===========
 

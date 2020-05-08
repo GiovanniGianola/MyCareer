@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import androidx.annotation.NonNull;
 
 import com.example.mycareer.R;
-import com.example.mycareer.admin.view.fragment.ProfileFragment;
 import com.example.mycareer.model.Profile;
 import com.example.mycareer.utils.Utils;
 import com.example.mycareer.view.HomePageView;
@@ -159,9 +158,9 @@ public class HomePagePresenterImpl implements HomePagePresenter {
             case R.id.nav_log_out:
                 logOut();
                 break;
-            case R.id.nav_profile:
+            /*case R.id.nav_profile:
                 homePageView.startFragmentWithMessage("Profiles", new ProfileFragment());
-                break;
+                break;*/
         }
     }
 

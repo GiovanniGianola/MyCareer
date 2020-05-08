@@ -121,7 +121,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CourseViewHolder> 
 
     @Override
     public int getItemCount() {
-        return dataModel.size();
+        if(dataModel != null)
+            return dataModel.size();
+        return 0;
     }
 
     @Override

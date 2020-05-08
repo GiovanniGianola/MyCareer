@@ -1,81 +1,21 @@
 {
   "project_info": {
-    "project_number": "823302886737",
-    "firebase_url": "https://courseapp-f7766.firebaseio.com",
-    "project_id": "courseapp-f7766",
-    "storage_bucket": "courseapp-f7766.appspot.com"
+    "project_number": "970436683072",
+    "firebase_url": "https://mycareer-11622.firebaseio.com",
+    "project_id": "mycareer-11622",
+    "storage_bucket": "mycareer-11622.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:823302886737:android:5cf8a9fb7789f260",
-        "android_client_info": {
-          "package_name": "com.example.coursesapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "823302886737-0ef1876n0e5jiu77pe3v9pmbmjtemrvj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.coursesapp",
-            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
-          }
-        },
-        {
-          "client_id": "823302886737-nk6s002rtmm4m52odaudtp2550db7c81.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.coursesapp",
-            "certificate_hash": "62f97a743fc174889cea528b8d001e7c09456eae"
-          }
-        },
-        {
-          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:823302886737:android:6b59c08c67535ce5",
+        "mobilesdk_app_id": "1:970436683072:android:febbc874bef6353f5986a5",
         "android_client_info": {
           "package_name": "com.example.mycareer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "823302886737-hgspr2f12s0rpj39uv0m3qh4a2nmu8u6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.mycareer",
-            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
-          }
-        },
-        {
-          "client_id": "823302886737-hi5f4tkg31mj1hb5q57l35ejbjojk6sv.apps.googleusercontent.com",
+          "client_id": "970436683072-7aghfc5vqqq0ts0u9c6bi4ec7n5bknnp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.mycareer",
@@ -83,74 +23,31 @@
           }
         },
         {
-          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:823302886737:android:7b5619a8c63674fe",
-        "android_client_info": {
-          "package_name": "com.example.mycourses"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "823302886737-qhmrvithog63t3c4tqv0f31ur57oatub.apps.googleusercontent.com",
+          "client_id": "970436683072-o5fltqqr41snp020mkke4u123n4pd04n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.mycourses",
-            "certificate_hash": "6476d8a2b948a4e27e283c0174c45cd2803f1d0c"
+            "package_name": "com.example.mycareer",
+            "certificate_hash": "fd4f3c553df102a88ab8195c7e724fd1e9fe26e5"
           }
         },
         {
-          "client_id": "823302886737-agb2190s60dgnt2s78tskojatj157q14.apps.googleusercontent.com",
+          "client_id": "970436683072-vgdd156dhsp9ivffe07ffljlbf0p15kd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA9-8yqwqOd4hgkjpZuEayWMhRiv7ZRP7Y"
+          "current_key": "AIzaSyC41JlEhVv2LY6azPctE5YP35V8AW1dpW8"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "823302886737-gi959abdng37elo4e5ruar2djd11d53n.apps.googleusercontent.com",
+              "client_id": "970436683072-vgdd156dhsp9ivffe07ffljlbf0p15kd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

@@ -93,6 +93,9 @@ public class PredictionFragmentPresenterImpl implements PredictionFragmentPresen
         newStats = new Statistic();
         List<Course> newList = Profile.getInstance().getCourseList();
 
+        if(newList == null)
+            return;
+
         Course newCourse = new Course();
         newCourse.setCredit(data[numberPickerValue-1]);
 

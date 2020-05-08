@@ -94,7 +94,9 @@ public class PredictionsAdapter extends RecyclerView.Adapter<PredictionsAdapter.
 
     @Override
     public int getItemCount() {
-        return dataModel.size();
+        if(dataModel != null)
+            return dataModel.size();
+        return 0;
     }
 
     public void runLayoutAnimation(final RecyclerView recyclerView) {

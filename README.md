@@ -3,7 +3,7 @@
 
 ## Summary
 
-This application was created only for the purpose of practicing google authentication and storage services provided by firebase exploiting MVP design pattern. the app works as a digital university book and offers 3 main features:
+This application was created for the purpose of practicing google authentication and storage services provided by firebase exploiting MVP design pattern. the app works as a digital university book and offers 3 main features:
 - allows you to enter the courses supported by specifying: name, CFU, grade (if already achieved) and date of registration;
 - allows you to view a summary of all the information of the courses entered showing: number of exams taken, weighted arithmetic average, possible graduation mark interval (considering a maximum of +7 points compared to the average in 110th) and some summary graphs of the grades and average score;
 - allows to check the variation of the average of the votes speculating on the credits not yet incurred.
